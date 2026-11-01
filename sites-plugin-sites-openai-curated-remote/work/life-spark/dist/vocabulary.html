@@ -11,7 +11,7 @@
 <title>俄语生词本 · 本地记录与复习</title>
 <script>try{document.documentElement.dataset.mode=localStorage.getItem('sparkMode')||'light'}catch(e){}</script>
 <link rel="icon" href="favicon.svg?v=44" type="image/svg+xml"><link rel="icon" href="favicon-32.png?v=44" sizes="32x32"><link rel="apple-touch-icon" href="favicon-180.png?v=44">
-<link rel="stylesheet" href="style.css?v=45">
+<link rel="stylesheet" href="style.css?v=46">
 </head>
 <body class="vocab-page">
 <a class="skip-link" href="#vocab-main">跳到生词本</a>
@@ -83,5 +83,9 @@ q('#exportWords').onclick=()=>{const blob=new Blob([JSON.stringify({format:'russ
 q('#importWords').onchange=async e=>{const file=e.target.files[0];e.target.value='';if(!file)return;if(file.size>1048576){status('备份文件超过 1MB，未导入。');return}try{const data=JSON.parse(await file.text()),incoming=Array.isArray(data)?data:data.words;if(!Array.isArray(incoming)){status('这不是有效的生词本备份。');return}const valid=incoming.filter(validWord).slice(0,MAX_WORDS).map(normalize),known=new Set(words.map(x=>`${x.term.toLocaleLowerCase('ru')}\n${x.meaning}`));let added=0;for(const x of valid){const key=`${x.term.toLocaleLowerCase('ru')}\n${x.meaning}`;if(!known.has(key)&&words.length<MAX_WORDS){x.id=`${now()}-${added}-${Math.random().toString(36).slice(2,8)}`;words.push(x);known.add(key);added++}}save();render();status(`已导入 ${added} 条新词，重复内容已跳过。`)}catch(err){status('无法读取这个备份文件，请确认它是有效的 JSON。')}};
 render();
 </script>
+<a class="mascot-dock" href="agent.html" aria-label="打开小星 AI 学习助理">
+  <span class="mascot-bubble" aria-hidden="true"><b>小星 · AI 学习助理</b><span>有俄语问题？来问我</span></span>
+  <span class="mascot-figure"><img src="assets/mascot.svg?v=1" alt="" width="64" height="64" decoding="async"></span>
+</a>
 </body>
 </html>

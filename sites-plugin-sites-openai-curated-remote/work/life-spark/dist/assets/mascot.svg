@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" role="img" aria-label="小星，AI 学习助理">
+  <defs>
+    <linearGradient id="body" x1="52" y1="32" x2="90" y2="118" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fffaf0"/>
+      <stop offset="1" stop-color="#f5e8d6"/>
+    </linearGradient>
+    <linearGradient id="cap" x1="46" y1="24" x2="96" y2="46" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#654331"/>
+      <stop offset="1" stop-color="#3a2820"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(70 76)">
+    <path d="M0 -42 L12 -17 L41 -15 L20 4 L27 35 L0 22 L-27 35 L-20 4 L-41 -15 L-12 -17 Z" fill="url(#body)" stroke="#c2603f" stroke-width="6.5" stroke-linejoin="round"/>
+    <ellipse cx="-9.5" cy="-1" rx="5" ry="5.8" fill="#35241c"/>
+    <ellipse cx="9.5" cy="-1" rx="5" ry="5.8" fill="#35241c"/>
+    <circle cx="-11" cy="-3" r="1.7" fill="#fff" opacity=".92"/>
+    <circle cx="8" cy="-3" r="1.7" fill="#fff" opacity=".92"/>
+    <path d="M-7 10 Q0 17 7 10" fill="none" stroke="#4a2e1f" stroke-width="3" stroke-linecap="round"/>
+    <ellipse cx="-18" cy="11" rx="6.4" ry="4.2" fill="#e7a28a" opacity=".55"/>
+    <ellipse cx="18" cy="11" rx="6.4" ry="4.2" fill="#e7a28a" opacity=".55"/>
+    <g transform="translate(-2 -39) rotate(-7)">
+      <path d="M-30 0 L0 -14 L30 0 L0 13 Z" fill="url(#cap)" stroke="#3a2820" stroke-width="1.2" stroke-linejoin="round"/>
+      <path d="M-16 7 L-16 17 Q0 25 16 17 L16 7" fill="#4a3125" stroke="#3a2820" stroke-width="1"/>
+      <path d="M20 2 L28 19" fill="none" stroke="#c2603f" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="29" cy="21" r="3.8" fill="#c2603f"/>
+    </g>
+  </g>
+</svg>

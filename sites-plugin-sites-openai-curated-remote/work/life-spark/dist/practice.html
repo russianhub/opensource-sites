@@ -11,7 +11,7 @@
 <title>俄语语法练习 · A1 到 B1</title>
 <script>try{document.documentElement.dataset.mode=localStorage.getItem('sparkMode')||'light'}catch(e){}</script>
 <link rel="icon" href="favicon.svg?v=44" type="image/svg+xml"><link rel="icon" href="favicon-32.png?v=44" sizes="32x32"><link rel="apple-touch-icon" href="favicon-180.png?v=44">
-<link rel="stylesheet" href="style.css?v=45">
+<link rel="stylesheet" href="style.css?v=46">
 </head>
 <body class="practice-page">
 <a class="skip-link" href="#practice-main">跳到语法练习</a>
@@ -92,5 +92,9 @@ function answer(choice){if(answered)return;answered=true;const item=QUESTION_BAN
 function finish(){best[level]=Math.max(Number(best[level])||0,score);saveBest();q('#questionView').hidden=true;q('#practiceResult').hidden=false;q('#resultScore').textContent=`${score} / 6`;q('#resultTitle').textContent=score===6?'这一阶段很稳':score>=4?'基础已经形成':'回看解释，再练一轮';q('#resultAdvice').textContent=score===6?'可以进入学习路线的下一阶段，或换一级继续练习。':score>=4?'把答错的完整句子读两遍，再完成一次练习。':'建议回到对应阶段的课程与词典，先理解规则再重新作答。';q('#practiceBest').textContent=`${best[level]} / 6`}
 q('#nextQuestion').onclick=()=>{index++;if(index>=QUESTION_BANK[level].length)finish();else renderQuestion()};q('#restartPractice').onclick=()=>{index=0;score=0;renderQuestion()};qa('[data-practice-level]').forEach(b=>b.onclick=()=>{level=b.dataset.practiceLevel;index=0;score=0;renderQuestion()});renderQuestion();
 </script>
+<a class="mascot-dock" href="agent.html" aria-label="打开小星 AI 学习助理">
+  <span class="mascot-bubble" aria-hidden="true"><b>小星 · AI 学习助理</b><span>有俄语问题？来问我</span></span>
+  <span class="mascot-figure"><img src="assets/mascot.svg?v=1" alt="" width="64" height="64" decoding="async"></span>
+</a>
 </body>
 </html>

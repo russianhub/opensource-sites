@@ -2017,3 +2017,151 @@ nav>.links a:focus-visible{
   .account-nav{display:none}
   nav>.links a{height:29px;padding:0 9px}
 }
+
+/* v46 小星悬浮助手与 AI 形象 */
+.mascot-dock{
+  position:fixed;
+  right:24px;
+  right:max(24px,env(safe-area-inset-right));
+  bottom:24px;
+  bottom:calc(24px + env(safe-area-inset-bottom));
+  z-index:60;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:var(--ink);
+  text-decoration:none;
+  -webkit-tap-highlight-color:transparent;
+}
+.mascot-bubble{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  max-width:230px;
+  padding:9px 13px;
+  border:1px solid var(--line);
+  border-radius:15px 15px 4px 15px;
+  background:var(--card);
+  box-shadow:0 8px 22px rgba(60,40,25,.09);
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+.mascot-bubble b{
+  color:var(--ink);
+  font-size:12.5px;
+  font-weight:650;
+  line-height:1.35;
+  white-space:nowrap;
+}
+.mascot-bubble span{
+  color:var(--ink-3);
+  font-size:11.5px;
+  line-height:1.45;
+  white-space:nowrap;
+}
+.mascot-figure{
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:66px;
+  height:66px;
+  flex:none;
+  border:1px solid var(--line);
+  border-radius:19px;
+  background:var(--card);
+  box-shadow:0 10px 26px rgba(60,40,25,.14);
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.mascot-figure::after{
+  content:"";
+  position:absolute;
+  top:8px;
+  right:8px;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 0 4px var(--accent-soft);
+}
+.mascot-figure img{
+  display:block;
+  width:56px;
+  height:56px;
+  animation:mascot-bob 4.6s ease-in-out infinite;
+}
+.mascot-dock:hover .mascot-figure,
+.mascot-dock:focus-visible .mascot-figure{
+  transform:translateY(-3px);
+  border-color:var(--line-2);
+  box-shadow:0 14px 30px rgba(60,40,25,.18);
+}
+.mascot-dock:hover .mascot-figure img,
+.mascot-dock:focus-visible .mascot-figure img{animation-play-state:paused}
+.mascot-dock:hover .mascot-bubble{
+  border-color:var(--line-2);
+  box-shadow:0 12px 26px rgba(60,40,25,.12);
+}
+.mascot-dock:focus-visible{outline:none}
+.mascot-dock:focus-visible .mascot-figure{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+}
+@keyframes mascot-bob{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-4px)}
+}
+
+/* Agent 页沿用同一个卡通形象 */
+.agent-orb{
+  width:44px;
+  height:44px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--card) url("assets/mascot.svg?v=1") center/34px 34px no-repeat;
+  color:transparent;
+  font-size:0;
+  box-shadow:0 4px 14px rgba(60,40,25,.08);
+}
+.agent-message.assistant .message-avatar{
+  border:1px solid var(--line);
+  background:var(--card) url("assets/mascot.svg?v=1") center/28px 28px no-repeat;
+  color:transparent;
+  font-size:0;
+  box-shadow:0 2px 8px rgba(60,40,25,.06);
+}
+
+@media(max-width:760px){
+  .mascot-bubble{display:none}
+}
+@media(max-width:560px){
+  .mascot-dock{
+    right:14px;
+    right:max(14px,env(safe-area-inset-right));
+    bottom:14px;
+    bottom:calc(14px + env(safe-area-inset-bottom));
+  }
+  .mascot-figure{
+    width:58px;
+    height:58px;
+    border-radius:17px;
+  }
+  .mascot-figure img{
+    width:50px;
+    height:50px;
+  }
+  .mascot-figure::after{
+    top:6px;
+    right:6px;
+    width:5px;
+    height:5px;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .mascot-figure img{animation:none}
+  .mascot-dock *{transition:none}
+}
+@media(forced-colors:active){
+  .mascot-figure{border:1px solid ButtonText}
+}
+@media print{
+  .mascot-dock{display:none}
+}

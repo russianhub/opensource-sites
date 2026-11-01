@@ -11,7 +11,7 @@
 <title>俄语学习路线 · 从 A1 到 C1</title>
 <script>try{document.documentElement.dataset.mode=localStorage.getItem('sparkMode')||'light'}catch(e){}</script>
 <link rel="icon" href="favicon.svg?v=44" type="image/svg+xml"><link rel="icon" href="favicon-32.png?v=44" sizes="32x32"><link rel="apple-touch-icon" href="favicon-180.png?v=44">
-<link rel="stylesheet" href="style.css?v=45">
+<link rel="stylesheet" href="style.css?v=46">
 </head>
 <body class="roadmap-page">
 <a class="skip-link" href="#roadmap-main">跳到学习路线</a>
@@ -70,5 +70,9 @@ function save(){try{localStorage.setItem('russianRoadmap',JSON.stringify(state))
 function render(){const d=LEVELS[state.level],raw=state.done[state.level],done=Array.isArray(raw)?raw.filter(x=>Number.isInteger(x)&&x>=0&&x<4):[];state.done[state.level]=done;q('#levelCode').textContent=state.level.toUpperCase();q('#levelName').textContent=d.name;q('#levelAbility').textContent=d.ability;q('#levelNext').textContent=d.next;q('#levelProgress').textContent=`${done.length} / 4`;q('#levelMeter').style.width=`${done.length*25}%`;q('#milestoneList').innerHTML=d.tasks.map((x,i)=>`<button type="button" data-task="${i}" aria-pressed="${done.includes(i)}" class="${done.includes(i)?'done':''}"><i aria-hidden="true"></i><span><b>${x}</b><small>${done.includes(i)?'已完成':'标记为已完成'}</small></span></button>`).join('');q('#levelLinks').innerHTML=d.links.map(x=>`<a href="${x[1]}">${x[0]} <span aria-hidden="true">→</span></a>`).join('');qa('[data-level]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.level===state.level)));qa('[data-task]').forEach(b=>b.onclick=()=>{const n=Number(b.dataset.task),list=state.done[state.level];state.done[state.level]=list.includes(n)?list.filter(x=>x!==n):[...list,n];save();render()})}
 qa('[data-level]').forEach(b=>b.onclick=()=>{state.level=b.dataset.level;save();render()});render();
 </script>
+<a class="mascot-dock" href="agent.html" aria-label="打开小星 AI 学习助理">
+  <span class="mascot-bubble" aria-hidden="true"><b>小星 · AI 学习助理</b><span>有俄语问题？来问我</span></span>
+  <span class="mascot-figure"><img src="assets/mascot.svg?v=1" alt="" width="64" height="64" decoding="async"></span>
+</a>
 </body>
 </html>
