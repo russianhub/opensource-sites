@@ -218,7 +218,7 @@ document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{filter=b.da
 
 const savedLink=$('#savedLink');if(savedLink)savedLink.onclick=()=>{filter='saved';render()};
 
-const syncModeToggle=()=>{const dark=document.documentElement.dataset.mode==='dark';const toggle=$('#modeToggle');if(toggle){toggle.setAttribute('aria-pressed',String(dark));toggle.setAttribute('aria-label',dark?'切换到浅色模式':'切换到深色模式')}const theme=document.querySelector('meta[name="theme-color"]');if(theme)theme.setAttribute('content',dark?'#10211e':'#E7F6F1')};
+const syncModeToggle=()=>{const dark=document.documentElement.dataset.mode==='dark';const toggle=$('#modeToggle');if(toggle){toggle.setAttribute('aria-pressed',String(dark));toggle.setAttribute('aria-label',dark?'切换到浅色模式':'切换到深色模式')}const theme=document.querySelector('meta[name="theme-color"]');if(theme)theme.setAttribute('content',dark?'#12100e':'#F8F2E8')};
 syncModeToggle();
 $('#modeToggle').onclick=()=>{
   const next=document.documentElement.dataset.mode==='dark'?'light':'dark';

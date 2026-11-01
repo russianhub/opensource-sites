@@ -6,8 +6,8 @@
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#E7F6F1",
-  "theme_color": "#E7F6F1",
+  "background_color": "#F8F2E8",
+  "theme_color": "#F8F2E8",
   "shortcuts": [
     {"name": "完整资源目录", "short_name": "资源目录", "url": "./resources.html"},
     {"name": "我的俄语学习", "short_name": "我的学习", "url": "./dashboard.html"},

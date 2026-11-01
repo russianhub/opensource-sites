@@ -2353,55 +2353,54 @@ nav>.links a:focus-visible{
 
 /* ============================================================
    v50 清新学习台
-   方向：薄雾底、青绿主色、少量莓红点缀。
-   中文用无衬线，整句俄语再用衬线；字号和行距按阅读而不是海报。
-   本层覆盖旧的陶土色和过小的说明文字。
+   排版仍按学习台的字号和行距。配色恢复合并前的陶土色，见 v51。
    ============================================================ */
+/* v51 配色恢复：浅色陶土纸面与深色暖棕，按钮沿用原来的陶土底色。 */
 :root{
   --font-sans:"PingFang SC","HarmonyOS Sans SC","Noto Sans SC","Noto Sans CJK SC","Source Han Sans SC","Microsoft YaHei","Segoe UI","Noto Sans","Liberation Sans",system-ui,sans-serif;
   --font-ru:"Iowan Old Style","Palatino Linotype",Palatino,"Noto Serif","Liberation Serif","Times New Roman",Georgia,serif;
-  --bg:#f3f8f6;
-  --win:#f7fbf9;
-  --win-2:#eef5f2;
+  --bg:#f2eee5;
+  --win:#faf7f0;
+  --win-2:#f2eee5;
   --card:#ffffff;
-  --card-2:#e7f2ed;
-  --line:#d5e6df;
-  --line-2:#b7d0c6;
-  --ink:#14302b;
-  --ink-2:#3c564e;
-  --ink-3:#5c726a;
-  --accent:#0f766e;
-  --accent-2:#0c5f59;
-  --accent-soft:rgba(15,118,110,.1);
-  --ru-red:#d4536a;
-  --glass:rgba(247,251,249,.9);
-  --glass-2:rgba(255,255,255,.96);
+  --card-2:#f6f1e8;
+  --line:#e8e0d3;
+  --line-2:#d8ccbc;
+  --ink:#241f1a;
+  --ink-2:#5d554c;
+  --ink-3:#8b8176;
+  --accent:#a84a32;
+  --accent-2:#8c3b27;
+  --accent-soft:rgba(168,74,50,.09);
+  --ru-red:#a84235;
+  --glass:rgba(250,247,240,.84);
+  --glass-2:rgba(255,255,255,.97);
   --glow:none;
-  --shadow:0 1px 2px rgba(20,48,43,.04);
-  --shadow-lg:0 16px 40px rgba(20,48,43,.08);
-  --shadow-accent:0 8px 20px rgba(15,118,110,.18);
+  --shadow:0 1px 2px rgba(36,31,26,.04);
+  --shadow-lg:0 20px 50px rgba(36,31,26,.08);
+  --shadow-accent:0 6px 18px rgba(168,74,50,.18);
 }
 [data-mode="dark"]{
   color-scheme:dark;
-  --bg:#101816;
-  --win:#15211e;
-  --win-2:#1b2925;
-  --card:#1c2b27;
-  --card-2:#243632;
-  --line:#2e4540;
-  --line-2:#3e5c54;
-  --ink:#e7f4ef;
-  --ink-2:#c5d9d2;
-  --ink-3:#9db5ad;
-  --accent:#8ee0c8;
-  --accent-2:#b6f0df;
-  --accent-soft:rgba(142,224,200,.14);
-  --ru-red:#f0a0a8;
-  --glass:rgba(21,33,30,.92);
-  --glass-2:rgba(28,43,39,.96);
-  --shadow:0 1px 2px rgba(0,0,0,.28);
-  --shadow-lg:0 18px 44px rgba(0,0,0,.34);
-  --shadow-accent:0 8px 20px rgba(142,224,200,.12);
+  --bg:#12100e;
+  --win:#181512;
+  --win-2:#1e1a16;
+  --card:#221e1a;
+  --card-2:#2a2520;
+  --line:#332c25;
+  --line-2:#463b32;
+  --ink:#f2ece2;
+  --ink-2:#c2b7aa;
+  --ink-3:#91867a;
+  --accent:#e8a78f;
+  --accent-2:#f2bda9;
+  --accent-soft:rgba(232,167,143,.13);
+  --ru-red:#e08c78;
+  --glass:rgba(24,21,18,.84);
+  --glass-2:rgba(34,30,26,.97);
+  --shadow:0 1px 2px rgba(0,0,0,.24);
+  --shadow-lg:0 22px 54px rgba(0,0,0,.32);
+  --shadow-accent:0 6px 18px rgba(232,167,143,.13);
 }
 html,body{background:var(--bg);color:var(--ink)}
 body{
@@ -2419,22 +2418,22 @@ h1,h2,h3,.panel h2,.sectionhead h2,.pangyi-feature h2,.footer-title,.guide-hero 
 h1{font-size:clamp(34px,4vw,48px);line-height:1.28}
 h2,.panel h2,.sectionhead h2{font-size:clamp(26px,2.5vw,34px);line-height:1.32}
 .section-kicker,.guide-hero .kicker,.directory-hero>p,.subpage-hero>p:not(.subpage-intro){
-  color:var(--accent);
+  color:var(--ru-red);
   font-size:13px;
   font-weight:650;
   letter-spacing:.02em;
   line-height:1.5;
 }
-::selection{background:rgba(15,118,110,.16)}
+::selection{background:rgba(168,74,50,.18)}
 .brand b{font-size:16px;letter-spacing:.02em}
 .brand small{font-size:11px;letter-spacing:.04em}
 nav>.links{height:auto;min-height:46px;gap:4px;font-size:13.5px}
 nav>.links a{height:32px;padding:0 10px}
 .nav-go,.primary,.search-panel .search-group .super-go,.search-panel .cchip.active,.tab.active{
-  color:#fff;
+  color:var(--win);
 }
-.nav-go{background:var(--accent);box-shadow:none}
-.nav-go:hover,.primary:hover,.search-panel .search-group .super-go:hover{background:var(--accent-2);color:#fff}
+.nav-go{background:var(--accent);box-shadow:0 4px 12px rgba(168,74,50,.16)}
+.nav-go:hover,.primary:hover,.search-panel .search-group .super-go:hover{background:var(--accent-2);color:var(--win);box-shadow:0 6px 16px rgba(168,74,50,.2)}
 .primary{background:var(--accent);border-radius:10px}
 .intro,.panel p,.muted,.guide-hero .lead,.subpage-intro{color:var(--ink-2);font-size:16px;line-height:1.75}
 .search-panel{padding:48px 0 40px!important}
@@ -2482,7 +2481,7 @@ nav>.links a{height:32px;padding:0 10px}
   font-size:13px;
 }
 .search-panel .cchip[data-target="nav-isu"]:not(.active){color:var(--ink-2)}
-.search-panel .cchip.active,.cchip.active{border-color:var(--accent);background:var(--accent);color:#fff}
+.search-panel .cchip.active,.cchip.active{border-color:var(--accent);background:var(--accent);color:var(--win)}
 .resource-toolside a,.resource-status,.resource-note{font-size:13px;line-height:1.7}
 .resource-note{color:var(--ink-2)}
 .favorite-toggle{min-height:36px;font-size:13px}
@@ -2574,12 +2573,14 @@ nav>.links a{height:32px;padding:0 10px}
 .study-phrase .phrase-note,.study-saved{font-size:13px;line-height:1.65;color:var(--ink-2)}
 .study-tasks b,.study-roadmap-link b{font-size:15px}
 .study-tasks small,.study-roadmap-link small{font-size:13px;color:var(--ink-2)}
-.pangyi-feature{background:linear-gradient(160deg,#0f3d38 0%,#14685c 100%)}
-[data-mode="dark"] .pangyi-feature{background:linear-gradient(160deg,#0c2422 0%,#124840 100%)}
-.pangyi-feature h2{color:#f3fbf7;font-size:clamp(30px,3.4vw,44px);line-height:1.28}
-.pangyi-copy>p{color:#d5ebe4;font-size:16px;line-height:1.75}
-.pangyi-actions .primary{background:#f3fbf7;color:#0f3d38}
-.pangyi-actions .primary:hover{background:#fff;color:#0f3d38}
+.pangyi-feature{background:linear-gradient(135deg,#3a2820 0%,#56382a 100%)}
+[data-mode="dark"] .pangyi-feature{background:linear-gradient(135deg,#221713 0%,#35241c 100%)}
+.pangyi-feature h2{color:#f8f2e8;font-size:clamp(30px,3.4vw,44px);line-height:1.28}
+.pangyi-copy>p{color:#dcc8bb;font-size:16px;line-height:1.75}
+.pangyi-brandline span,.pangyi-actions>span{color:#b9a294}
+.pangyi-points li{color:#ecdfd5}
+.pangyi-actions .primary{background:#f8f2e8;color:#3a2820}
+.pangyi-actions .primary:hover{background:#fff;color:#3a2820;box-shadow:none}
 .guide-hero{padding:28px 0 24px}
 .guide-hero h1{font-size:clamp(32px,4vw,44px);line-height:1.25}
 .guide-hero .lead{font-size:16px;line-height:1.75}
@@ -2614,20 +2615,31 @@ nav>.links a{height:32px;padding:0 10px}
 .subpage-hero h1,.auth-card h1,.page-title{font-size:clamp(30px,4vw,44px);line-height:1.28}
 .footer-title{font-family:var(--font-sans);font-size:clamp(26px,3vw,36px);line-height:1.35}
 .footer-bottom,.footer-links a{font-size:13px}
-.quiz{background:var(--accent);color:#fff}
-[data-mode="dark"] .quiz{background:#14584f;color:var(--ink)}
+.quiz{background:var(--accent);color:var(--win)}
+[data-mode="dark"] .quiz{background:#2b1f19;color:var(--ink)}
 [data-mode="dark"] .nav-go,
 [data-mode="dark"] .primary,
 [data-mode="dark"] .search-panel .search-group .super-go,
 [data-mode="dark"] .search-panel .cchip.active,
+[data-mode="dark"] .cchip.active,
 [data-mode="dark"] .tab.active,
 [data-mode="dark"] .save-ico{
-  color:#08211c;
+  color:#1b1511;
 }
 [data-mode="dark"] .nav-go:hover,
 [data-mode="dark"] .primary:hover,
-[data-mode="dark"] .search-panel .search-group .super-go:hover{color:#08211c}
-[data-mode="dark"] ::selection{background:rgba(142,224,200,.28)}
+[data-mode="dark"] .search-panel .search-group .super-go:hover{color:#1b1511}
+[data-mode="dark"] ::selection{background:rgba(232,167,143,.28)}
+[data-mode="dark"] html,
+[data-mode="dark"] body{background:var(--bg);color:var(--ink)}
+[data-mode="dark"] nav{background:var(--glass)}
+[data-mode="dark"] .window{background:var(--win)}
+[data-mode="dark"] .catbar{background:transparent;border-color:transparent}
+[data-mode="dark"] .site:hover{background:var(--win-2)}
+[data-mode="dark"] .favorite-toggle strong{background:var(--card-2)}
+[data-mode="dark"] .site-icon,[data-mode="dark"] .hap-ico{background:var(--card)}
+[data-mode="dark"] .site-icon img,[data-mode="dark"] .hap-ico img{background:var(--win)}
+[data-mode="dark"] .brand>span{background:var(--accent);color:#1b1511}
 @media(max-width:1100px){
   .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
@@ -2663,7 +2675,7 @@ nav>.links a{height:32px;padding:0 10px}
 }
 footer{margin-left:0;margin-right:0}
 .search-panel .resource-note{font-size:13.5px;line-height:1.7;color:var(--ink-2)}
-.search-panel .section-kicker,.section-kicker{color:var(--accent)}
+.search-panel .section-kicker,.section-kicker{color:var(--ru-red)}
 .search-panel .engine{flex-wrap:wrap;overflow:visible}
 .search-panel .engine-chip,.engine-chip{flex:none;white-space:nowrap}
 .resource-subfilters{flex-wrap:wrap;overflow:visible;row-gap:2px}
