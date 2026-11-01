@@ -1,12 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="俄语星球">
-  <defs>
-    <linearGradient id="bg" x1="8" y1="4" x2="56" y2="60" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#2a4b66"/>
-      <stop offset="1" stop-color="#17324a"/>
-    </linearGradient>
-  </defs>
-  <rect width="64" height="64" rx="15" fill="url(#bg)"/>
-  <rect x=".75" y=".75" width="62.5" height="62.5" rx="14.25" fill="none" stroke="#f8f6f1" stroke-opacity=".13" stroke-width="1.5"/>
-  <text x="30" y="45" text-anchor="middle" font-family="Georgia,'Times New Roman','Noto Serif',serif" font-weight="700" font-size="37" fill="#f8f6f1">Я</text>
-  <circle cx="50" cy="15" r="3.4" fill="#d97784"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="15" fill="#F8F2E8"/><rect x=".75" y=".75" width="62.5" height="62.5" rx="14.25" fill="none" stroke="#5a3c28" stroke-opacity=".13" stroke-width="1.5"/><g transform="translate(32 32) rotate(6) scale(1.0)" fill="none" stroke="#C2603F" stroke-linecap="round"><path d="M-0.07 -1.80 Q0.31 -13.32 -0.91 -24.78" stroke-width="3.55"/><path d="M0.94 -1.54 Q5.70 -10.87 11.83 -19.38" stroke-width="3.15"/><path d="M1.54 -0.93 Q11.53 -6.05 20.70 -12.54" stroke-width="3.8"/><path d="M1.80 0.07 Q13.62 -0.28 25.38 0.98" stroke-width="3.35"/><path d="M1.55 0.91 Q10.07 6.84 19.41 11.39" stroke-width="3.65"/><path d="M0.94 1.53 Q7.57 10.78 12.84 20.87" stroke-width="3.25"/><path d="M-0.06 1.80 Q-1.20 12.57 -0.74 23.39" stroke-width="3.75"/><path d="M-0.88 1.57 Q-5.91 12.11 -12.32 21.87" stroke-width="3.3"/><path d="M-1.58 0.87 Q-11.07 5.20 -19.79 10.92" stroke-width="3.6"/><path d="M-1.80 0.07 Q-13.06 1.33 -24.38 0.98" stroke-width="3.2"/><path d="M-1.55 -0.92 Q-10.28 -7.06 -19.84 -11.83" stroke-width="3.7"/><path d="M-0.85 -1.59 Q-6.95 -11.31 -11.63 -21.79" stroke-width="3.4"/></g><circle cx="32" cy="32" r="2.20" fill="#F8F2E8"/></svg>

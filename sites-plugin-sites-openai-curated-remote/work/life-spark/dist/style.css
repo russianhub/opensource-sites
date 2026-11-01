@@ -1758,3 +1758,85 @@ html{scroll-padding-top:120px}
 nav>.brand{width:min(100% - 48px,1240px);height:68px;margin:0 auto}
 @media(max-width:900px){nav>.brand{width:min(100% - 32px,1240px);height:62px}}
 @media(max-width:560px){nav>.brand{width:calc(100% - 24px);height:58px}}
+
+/* v44 珊瑚陶土品牌与星芒图标 */
+:root{
+  --bg:#f2eee5;
+  --win:#faf7f0;
+  --win-2:#f2eee5;
+  --card:#ffffff;
+  --card-2:#f6f1e8;
+  --line:#e8e0d3;
+  --line-2:#d8ccbc;
+  --ink:#241f1a;
+  --ink-2:#5d554c;
+  --ink-3:#8b8176;
+  --accent:#a84a32;
+  --accent-2:#8c3b27;
+  --accent-soft:rgba(168,74,50,.09);
+  --ru-red:#a84235;
+  --glass:rgba(250,247,240,.84);
+  --glass-2:rgba(255,255,255,.97);
+  --shadow:0 1px 2px rgba(36,31,26,.04);
+  --shadow-lg:0 20px 50px rgba(36,31,26,.08);
+  --shadow-accent:0 6px 18px rgba(168,74,50,.18);
+}
+[data-mode="dark"]{
+  color-scheme:dark;
+  --bg:#12100e;
+  --win:#181512;
+  --win-2:#1e1a16;
+  --card:#221e1a;
+  --card-2:#2a2520;
+  --line:#332c25;
+  --line-2:#463b32;
+  --ink:#f2ece2;
+  --ink-2:#c2b7aa;
+  --ink-3:#91867a;
+  --accent:#e8a78f;
+  --accent-2:#f2bda9;
+  --accent-soft:rgba(232,167,143,.13);
+  --ru-red:#e08c78;
+  --glass:rgba(24,21,18,.84);
+  --glass-2:rgba(34,30,26,.97);
+  --shadow:0 1px 2px rgba(0,0,0,.24);
+  --shadow-lg:0 22px 54px rgba(0,0,0,.32);
+  --shadow-accent:0 6px 18px rgba(232,167,143,.13);
+}
+::selection{background:rgba(168,74,50,.18)}
+.brand-mark{
+  display:block;width:38px;height:38px;flex:none;
+  filter:drop-shadow(0 1px 1.2px rgba(60,40,25,.08));
+}
+@media(max-width:900px){.brand-mark{width:36px;height:36px}}
+@media(max-width:560px){.brand-mark{width:35px;height:35px}}
+
+/* 旧版深蓝组件随主题转暖 */
+.agent-orb{background:url("favicon.svg?v=44") center/contain no-repeat;color:transparent;font-size:0}
+.message-avatar{background:#f4e4da;color:var(--accent)}
+.agent-message.assistant .message-avatar{background:url("favicon.svg?v=44") center/contain no-repeat;color:transparent;font-size:0}
+.agent-message.user .message-avatar{background:#f6ddd2;color:#8d3d29}
+.agent-message p{border-color:var(--line);background:var(--card-2);color:var(--ink);box-shadow:0 6px 22px rgba(90,60,35,.04)}
+.agent-message.user p{border-color:var(--accent);background:var(--accent);color:var(--win)}
+.agent-message code{background:var(--card);color:var(--accent)}
+.agent-message.pending i{background:var(--accent)}
+.agent-status>span.guest{background:var(--accent);box-shadow:0 0 0 5px var(--accent-soft)}
+.agent-identity small{color:var(--ink-3)}
+.agent-compose-meta button{background:var(--accent);color:var(--win)}
+.user-test-mark{background:var(--accent-soft);color:var(--accent)}
+
+/* 旁译深色区块改为暖调浓缩咖啡色 */
+.pangyi-feature{background:linear-gradient(135deg,#3a2820 0%,#56382a 100%)}
+[data-mode="dark"] .pangyi-feature{background:linear-gradient(135deg,#221713 0%,#35241c 100%)}
+.pangyi-copy>p{color:#dcc8bb}
+.pangyi-brandline span,.pangyi-actions>span{color:#b9a294}
+.pangyi-points li{border-color:rgba(255,255,255,.18);color:#ecdfd5}
+.pangyi-actions .primary{background:#f8f2e8;color:#3a2820}
+.pangyi-actions .primary:hover{background:#fff;color:#3a2820;box-shadow:none}
+.pangyi-preview{background:#1d1310;border-color:rgba(255,255,255,.12);box-shadow:0 24px 54px rgba(0,0,0,.24)}
+
+/* 深色模式按钮改用浅陶土底与深字 */
+[data-mode="dark"] .nav-go,[data-mode="dark"] .search-panel .search-group .super-go,[data-mode="dark"] .primary,[data-mode="dark"] .search-panel .cchip.active{color:#1b1511}
+[data-mode="dark"] .nav-go:hover,[data-mode="dark"] .search-panel .search-group .super-go:hover,[data-mode="dark"] .primary:hover{color:#1b1511}
+[data-mode="dark"] .quiz{background:#2b1f19;color:var(--ink)}
+[data-mode="dark"] .quiz .section-kicker,[data-mode="dark"] .quiz p,[data-mode="dark"] .quiz small{color:#d7c2b4}
