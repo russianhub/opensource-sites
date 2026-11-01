@@ -31,18 +31,28 @@ const html=`<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#F8F2E8">
-<meta name="description" content="俄语星球完整资源目录：系统课程、词典翻译、俄罗斯留学必备、伊尔库茨克国立大学、求职兼职和学习工具。">
+<meta name="description" content="${sites.length} 个精选俄语学习与留学资源的完整目录。每条都有推荐理由和评级，涵盖课程、词典、留学、ИГУ、求职与学习工具。">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="canonical" href="https://russianhub.github.io/opensource-sites/resources.html">
 <title>完整俄语资源目录 · 俄语星球</title>
 <link rel="icon" href="favicon.svg?v=44" type="image/svg+xml"><link rel="icon" href="favicon-32.png?v=44" sizes="32x32"><link rel="apple-touch-icon" href="favicon-180.png?v=44">
-<link rel="stylesheet" href="style.css?v=49">
+<link rel="stylesheet" href="style.css?v=50">
 <meta property="og:type" content="website">
 <meta property="og:title" content="完整俄语资源目录 · 俄语星球">
-<meta property="og:description" content="${sites.length} 个经过整理的俄语课程、词典、留学、校园服务、求职与学习工具入口。">
+<meta property="og:description" content="${sites.length} 个精选俄语学习与留学资源。每条都有推荐理由和评级，涵盖课程、词典、留学、ИГУ、求职与学习工具。">
 <meta property="og:url" content="https://russianhub.github.io/opensource-sites/resources.html">
-<meta property="og:image" content="https://russianhub.github.io/opensource-sites/og-image.jpg?v=44">
+<meta property="og:image" content="https://russianhub.github.io/opensource-sites/og-image.jpg?v=50">
+<meta property="og:image:alt" content="俄语星球：171 个精选俄语学习与留学资源，每条都有推荐理由和评级">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="完整俄语资源目录 · 俄语星球">
+<meta name="twitter:description" content="${sites.length} 个精选俄语学习与留学资源。每条都有推荐理由和评级。">
+<meta name="twitter:image" content="https://russianhub.github.io/opensource-sites/og-image.jpg?v=50">
+<meta name="twitter:image:alt" content="俄语星球：171 个精选俄语学习与留学资源，每条都有推荐理由和评级">
 <script type="application/ld+json">${JSON.stringify(itemList).replace(/</g,'\\u003c')}</script>
 </head>
 <body class="directory-page">
