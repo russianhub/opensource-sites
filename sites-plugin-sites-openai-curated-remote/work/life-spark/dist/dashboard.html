@@ -11,7 +11,7 @@
 <title>我的学习 · 俄语星球</title>
 <script>try{document.documentElement.dataset.mode=localStorage.getItem('sparkMode')||'light'}catch(e){}</script>
 <link rel="icon" href="favicon.svg?v=44" type="image/svg+xml"><link rel="icon" href="favicon-32.png?v=44" sizes="32x32"><link rel="apple-touch-icon" href="favicon-180.png?v=44">
-<link rel="stylesheet" href="style.css?v=46">
+<link rel="stylesheet" href="style.css?v=47">
 </head>
 <body class="dashboard-page">
 <a class="skip-link" href="#dashboard-main">跳到我的学习</a>
@@ -55,9 +55,10 @@ q('#dashLevel').textContent=level?level.toUpperCase():'—';q('#dashLevelName').
 let title,text,href,label;if(!level){title='先确定当前阶段';text='选择最接近自己的 A1–C1 阶段，获得清晰的下一步。';href='roadmap.html';label='选择学习阶段'}else if(taskCount<4){title='完成今天的四件小事';text=`今天已完成 ${taskCount} 项，还剩 ${4-taskCount} 项轻量学习任务。`;href='index.html#study-desk';label='继续今日学习'}else if(due>0){title='复习到期生词';text=`有 ${due} 个词已经到复习时间，先把它们重新想起来。`;href='vocabulary.html';label='开始复习'}else{title='做一轮语法练习';text=`从 ${level.toUpperCase()} 附近的语法开始，用6道题检查理解。`;href='practice.html';label='开始语法练习'}q('#focus-title').textContent=title;q('#dashNextText').textContent=text;q('#dashNextLink').href=href;q('#dashNextLink').textContent=label}
 renderDashboard();window.addEventListener('pageshow',renderDashboard);
 </script>
-<a class="mascot-dock" href="agent.html" aria-label="打开小星 AI 学习助理">
+<a class="mascot-dock" href="agent.html" aria-label="小星 AI 学习助理，可拖动，点击打开对话" title="拖动小星到任意位置，点击打开 AI 助理">
   <span class="mascot-bubble" aria-hidden="true"><b>小星 · AI 学习助理</b><span>有俄语问题？来问我</span></span>
-  <span class="mascot-figure"><img src="assets/mascot.svg?v=1" alt="" width="64" height="64" decoding="async"></span>
+  <span class="mascot-figure"><img src="assets/mascot.svg?v=1" alt="" width="64" height="64" decoding="async" draggable="false"></span>
 </a>
+<script src="mascot.js?v=1"></script>
 </body>
 </html>
