@@ -121,7 +121,7 @@ function save(id){
 function render(){
   const list=ideas.filter(i=>filter==='all'||(filter==='saved'?saved.includes(i.id):i.type===filter));
   const count=$('#count');if(count)count.textContent=saved.length;
-  $('#cards').innerHTML=list.length?list.map(i=>`<article class="tile"><div class="tile-icon" aria-hidden="true"><div class="tile-badges"><b>${timeText(i)}</b><b>${costText(i)}</b></div>${ideaArt(i.id)}</div><div class="tile-body"><h3>${i.title}</h3><p>${i.desc}</p><div class="actions"><button class="save" data-view="${i.id}">查看行动清单 ↗</button><button class="save" data-save="${i.id}" aria-pressed="${saved.includes(i.id)}">${saved.includes(i.id)?'♥ 已收藏':'♡ 收藏'}</button></div></div></article>`).join(''):'<p class="empty">还没有收藏。先在灵感卡片上点一下“收藏”，以后可以回来找。</p>';
+  $('#cards').innerHTML=list.length?list.map(i=>`<article class="tile"><div class="tile-icon" aria-hidden="true"><div class="tile-badges"><b>${timeText(i)}</b><b>${costText(i)}</b></div>${ideaArt(i.id)}</div><div class="tile-body"><h3>${i.title}</h3><p>${i.desc}</p><div class="actions"><button class="save" data-view="${i.id}">看看怎么做 ↗</button><button class="save" data-save="${i.id}" aria-pressed="${saved.includes(i.id)}">${saved.includes(i.id)?'♥ 已收藏':'♡ 收藏'}</button></div></div></article>`).join(''):'<p class="empty">还没有收藏。先点一张卡片上的“收藏”，以后可以回来找。</p>';
   document.querySelectorAll('[data-filter]').forEach(b=>{const active=b.dataset.filter===filter;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});
 }
 
@@ -129,16 +129,16 @@ function show(i){
   last=i;
   $('#result').hidden=false;
   $('#result').className='result';
-  $('#result').innerHTML=`<span class="meta">你的今日行动清单 · ${timeText(i)} · ${costText(i)}</span><h3>${i.icon} ${i.title}</h3><p>${i.desc}</p><ol>${i.steps.map(s=>`<li>${s}</li>`).join('')}</ol><p class="notice">${i.cost?('这份计划预计花费约 '+i.cost+' 元以内。'):'用已有物品就能开始，无需购物。'}</p><div class="actions"><button class="primary" id="saveResult">${saved.includes(i.id)?'取消收藏':'收藏这个计划'}</button><button class="secondary" id="shareResult">分享计划</button><button class="secondary" id="download">下载灵感卡</button></div>`;
+  $('#result').innerHTML=`<span class="meta">这次的休息建议 · ${timeText(i)} · ${costText(i)}</span><h3>${i.icon} ${i.title}</h3><p>${i.desc}</p><ol>${i.steps.map(s=>`<li>${s}</li>`).join('')}</ol><p class="notice">${i.cost?('这份安排预计花费约 '+i.cost+' 元以内。'):'用手头已有的东西就能开始。'}</p><div class="actions"><button class="primary" id="saveResult">${saved.includes(i.id)?'取消收藏':'收藏这个安排'}</button><button class="secondary" id="shareResult">分享</button><button class="secondary" id="download">下载图片</button></div>`;
   $('#saveResult').onclick=()=>save(i.id);
   $('#shareResult').onclick=()=>share(`${i.title}\n${i.steps.map((s,n)=>`${n+1}. ${s}`).join('\n')}`);
   $('#download').onclick=()=>download(i);
 }
 
 async function share(text){
-  const full=text+'\n来自生活灵感实验室\n'+location.href.split('#')[0];
+  const full=text+'\n来自俄语星球\n'+location.href.split('#')[0];
   try{
-    if(navigator.share){await navigator.share({title:'生活灵感实验室',text,url:location.href.split('#')[0]});return}
+    if(navigator.share){await navigator.share({title:'俄语星球',text,url:location.href.split('#')[0]});return}
     await navigator.clipboard.writeText(full);
     toast('已复制，粘贴给朋友就能分享');
   }catch(e){
@@ -149,7 +149,7 @@ async function share(text){
     a.select();
     const ok=document.execCommand('copy');
     a.remove();
-    toast(ok?'已复制分享内容':'复制不可用，请下载灵感卡后分享');
+    toast(ok?'已复制分享内容':'复制不可用，请下载图片后分享');
   }
 }
 
@@ -159,7 +159,7 @@ function download(i){
   const x=c.getContext('2d');
   x.fillStyle='#faf8f3';x.fillRect(0,0,1080,1350);
   x.fillStyle='#3f6ff0';x.fillRect(0,0,1080,120);
-  x.fillStyle='#fff';x.font='bold 40px sans-serif';x.fillText('生活灵感实验室',90,80);
+  x.fillStyle='#fff';x.font='bold 40px sans-serif';x.fillText('俄语星球',90,80);
   x.fillStyle='#26222e';x.font='bold 44px sans-serif';x.fillText(i.title,90,205);
   const finish=()=>{
     x.fillStyle='#575165';x.font='28px sans-serif';
@@ -169,7 +169,7 @@ function download(i){
     x.fillText(timeText(i)+' · '+costText(i),90,y+30);
     x.fillText('用一件小事，给今天一点新鲜感。',90,y+78);
     const a=document.createElement('a');
-    a.download='今日灵感 · '+i.title+'.png';
+    a.download='休息建议 · '+i.title+'.png';
     a.href=c.toDataURL('image/png');
     a.click();
   };
@@ -218,7 +218,7 @@ document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{filter=b.da
 
 const savedLink=$('#savedLink');if(savedLink)savedLink.onclick=()=>{filter='saved';render()};
 
-const syncModeToggle=()=>{const dark=document.documentElement.dataset.mode==='dark';$('#modeToggle').setAttribute('aria-pressed',String(dark));$('#modeToggle').setAttribute('aria-label',dark?'切换到浅色模式':'切换到深色模式')};
+const syncModeToggle=()=>{const dark=document.documentElement.dataset.mode==='dark';const toggle=$('#modeToggle');if(toggle){toggle.setAttribute('aria-pressed',String(dark));toggle.setAttribute('aria-label',dark?'切换到浅色模式':'切换到深色模式')}const theme=document.querySelector('meta[name="theme-color"]');if(theme)theme.setAttribute('content',dark?'#10211e':'#E7F6F1')};
 syncModeToggle();
 $('#modeToggle').onclick=()=>{
   const next=document.documentElement.dataset.mode==='dark'?'light':'dark';
@@ -239,7 +239,7 @@ function quiz(){
     const names=['蓝色 · 温柔充电家','黄色 · 日常探险家','绿色 · 快乐连接者'];
     const texts=['你的灵感往往来自放慢一点。给自己留一小块安静的时间。','你喜欢从熟悉的地方发现新意。带着好奇心，今天也有新风景。','你享受人与人之间的连接。从分享一首歌开始，让快乐流动。'];
     $('#quizbox').innerHTML=`<h3>${names[n]}</h3><p>${texts[n]}</p><p class="notice">结果来自本次选择，仅供娱乐。</p><div class="actions"><button class="primary" id="quizshare">分享我的颜色</button><button class="secondary" id="retry">再测一次</button></div>`;
-    $('#quizshare').onclick=()=>share('我的生活灵感颜色是：'+names[n]+'。'+texts[n]);
+    $('#quizshare').onclick=()=>share('我选的休息方式是：'+names[n]+'。'+texts[n]);
     $('#retry').onclick=()=>{q=0;scores=[0,0,0];quiz()};
     return;
   }
@@ -287,7 +287,7 @@ const siteTile=s=>{
   const favored=favoriteKeys.has(s.key);
   const host=siteHost(s);
   const recommend=siteRecommend(s);
-  return `<article class="site${c>=2?' hot':''}${favored?' is-favorite':''}"><a class="site-main" href="${s.url}" target="_blank" rel="noopener" data-site="${s.key}" aria-label="${escapeHtml(s.name)}：${escapeHtml(s.desc)}。${escapeHtml(recommend.aria)}来源 ${escapeHtml(host)}，基础核验 ${RESOURCE_REVIEW_DATE}，在新窗口打开">${siteIcon(s)}${c>=2?'<span class="site-hot">常逛</span>':''}<span class="site-text"><b class="site-name">${s.name}</b>${s.tag?`<em class="site-badge">${s.tag}</em>`:''}<i class="site-desc">${s.desc}</i><small class="site-meta"><span>${host}</span><time datetime="${RESOURCE_REVIEW_DATE}">基础核验 ${RESOURCE_REVIEW_DATE}</time></small>${recommend.html}</span><span class="site-go" aria-hidden="true">↗</span></a><span class="site-actions"><button class="site-favorite" type="button" data-favorite="${s.key}" aria-label="${favored?'取消收藏':'收藏'} ${s.name}" aria-pressed="${favored}"><span aria-hidden="true">★</span></button><button class="site-report" type="button" data-report="${s.key}" aria-label="报告 ${s.name} 链接失效"><span aria-hidden="true">!</span></button></span></article>`;
+  return `<article class="site${c>=2?' hot':''}${favored?' is-favorite':''}"><a class="site-main" href="${s.url}" target="_blank" rel="noopener" data-site="${s.key}" aria-label="${escapeHtml(s.name)}：${escapeHtml(s.desc)}。${escapeHtml(recommend.aria)}来源 ${escapeHtml(host)}，基础核验 ${RESOURCE_REVIEW_DATE}，在新窗口打开">${siteIcon(s)}${c>=2?'<span class="site-hot">常逛</span>':''}<span class="site-text"><b class="site-name">${s.name}</b>${s.tag?`<em class="site-badge">${s.tag}</em>`:''}<i class="site-desc">${s.desc}</i><small class="site-meta"><span>${host}</span><time datetime="${RESOURCE_REVIEW_DATE}">基础核验 ${RESOURCE_REVIEW_DATE}</time></small>${recommend.html}</span><span class="site-go" aria-hidden="true">↗</span></a><span class="site-actions"><button class="site-favorite" type="button" data-favorite="${s.key}" aria-label="${favored?'取消收藏':'收藏'} ${s.name}" aria-pressed="${favored}"><span aria-hidden="true">★</span></button><button class="site-report" type="button" data-report="${s.key}" aria-label="报告 ${s.name} 链接失效"><span aria-hidden="true">失效</span></button></span></article>`;
 };
 
 function renderSites(q){
@@ -305,7 +305,7 @@ function renderSites(q){
     total+=list.length;
   }
   $('#noHit').hidden=total>0;
-  $('#noHit').textContent=favoritesOnly?'还没有收藏资源。点击资源右侧的星标，就能在这里快速找到。':'没找到相关条目，换个词试试？';
+  $('#noHit').textContent=favoritesOnly?'还没有收藏。点资源卡片上的星标，之后可以在这里找回。':'没有对上的条目。换个词，或清空后按分类看。';
   $('#favoriteCount').textContent=favoriteKeys.size;
   $('#favoriteToggle').classList.toggle('active',favoritesOnly);
   $('#favoriteToggle').setAttribute('aria-pressed',String(favoritesOnly));
@@ -313,7 +313,7 @@ function renderSites(q){
 }
 
 function renderHeroCats(){
-  $('#heroApplist').innerHTML=[['isu','伊尔库茨克国立大学','#nav-isu'],['web','系统课程','#nav-web'],['app','词典翻译','#nav-app'],['tool','听说输入','#nav-tool'],['media','语言交流','#nav-media'],['russia','俄罗斯留学必备','#nav-russia'],['job','俄语求职','#nav-job'],['parttime','留学兼职','#nav-parttime'],['shop','全球社交','#nav-shop'],['core','公开资料','#nav-core'],['ai','学习工具','#nav-ai']].map(([c,n,h])=>{
+  $('#heroApplist').innerHTML=[['isu','伊大 ИГУ','#nav-isu'],['web','俄语课程','#nav-web'],['app','词典翻译','#nav-app'],['tool','听读材料','#nav-tool'],['media','找语伴','#nav-media'],['russia','留学生活','#nav-russia'],['job','俄语求职','#nav-job'],['parttime','留学生兼职','#nav-parttime'],['shop','社群','#nav-shop'],['core','网盘馆藏','#nav-core'],['ai','学习工具','#nav-ai']].map(([c,n,h])=>{
     const s=sites.find(x=>x.cat===c);
     return `<a class="hap" href="${h}">${siteIcon(s,'hap-ico')}<b>${n}</b><i>${sites.filter(x=>x.cat===c).length} 个入口</i></a>`;
   }).join('');
