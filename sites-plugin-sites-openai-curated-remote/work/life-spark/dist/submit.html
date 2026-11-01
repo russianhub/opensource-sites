@@ -11,24 +11,20 @@
 <title>推荐俄语资源或报告问题 · 俄语星球</title>
 <script>try{document.documentElement.dataset.mode=localStorage.getItem('sparkMode')||'light'}catch(e){document.documentElement.dataset.mode='light'}</script>
 <link rel="icon" href="favicon.svg?v=44" type="image/svg+xml"><link rel="icon" href="favicon-32.png?v=44" sizes="32x32"><link rel="apple-touch-icon" href="favicon-180.png?v=44">
-<link rel="stylesheet" href="style.css?v=50">
+<link rel="stylesheet" href="style.css?v=52">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="俄语星球">
 <meta property="og:title" content="推荐俄语资源或报告问题 · 俄语星球">
 <meta property="og:description" content="可以推荐俄语学习或留俄生活入口，也可以纠正描述、报告失效链接。请使用 HTTPS 地址。">
-<meta property="og:url" content="https://russianhub.github.io/opensource-sites/submit.html">
 <meta property="og:image" content="https://russianhub.github.io/opensource-sites/og-image.jpg?v=50">
 <meta property="og:image:alt" content="俄语星球：171 个精选俄语学习与留学资源，每条都有推荐理由和评级">
-<meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:locale" content="zh_CN">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="推荐俄语资源或报告问题 · 俄语星球">
 <meta name="twitter:description" content="可以推荐俄语学习或留俄生活入口，也可以纠正描述、报告失效链接。请使用 HTTPS 地址。">
 <meta name="twitter:image" content="https://russianhub.github.io/opensource-sites/og-image.jpg?v=50">
-<meta name="twitter:image:alt" content="俄语星球：171 个精选俄语学习与留学资源，每条都有推荐理由和评级">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"推荐俄语资源或报告问题","url":"https://russianhub.github.io/opensource-sites/submit.html","inLanguage":"zh-CN","description":"可以推荐俄语学习或留俄生活入口，也可以纠正描述、报告失效链接。请使用 HTTPS 地址。","isPartOf":{"@type":"WebSite","name":"俄语星球","url":"https://russianhub.github.io/opensource-sites/"},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"俄语星球","item":"https://russianhub.github.io/opensource-sites/"},{"@type":"ListItem","position":2,"name":"反馈与投稿","item":"https://russianhub.github.io/opensource-sites/submit.html"}]}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"推荐俄语资源或报告问题","url":"https://russianhub.github.io/opensource-sites/submit.html","inLanguage":"zh-CN","description":"反馈与投稿","isPartOf":{"@type":"WebSite","name":"俄语星球","url":"https://russianhub.github.io/opensource-sites/"},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"俄语星球","item":"https://russianhub.github.io/opensource-sites/"},{"@type":"ListItem","position":2,"name":"可以推荐俄语学习或留俄生活入口，也可以纠正描述、报告失效链接。请使用 HTTPS 地址。","item":"https://russianhub.github.io/opensource-sites/submit.html"}]}}</script>
 </head>
 <body class="feedback-page">
 <a class="skip-link" href="#feedback-main">跳到反馈表单</a>
@@ -38,7 +34,7 @@
   <header class="subpage-hero">
     <a class="back-link" href="./">← 返回首页</a>
     <p>反馈与投稿</p>
-    <h1>让每一个入口，<br>都更可靠一点。</h1>
+    <h1>推荐资源，或指出失效链接。</h1>
     <p class="subpage-intro">资源推荐、内容纠错、失效报告和产品建议都会进入公开待办。提交需要GitHub账号，处理过程和结果可追踪。</p>
   </header>
 
@@ -57,7 +53,7 @@
     <form id="resourceForm" novalidate>
       <label><span>资源名称</span><input class="text-input" id="resourceName" required maxlength="80" autocomplete="off" placeholder="例如：某个俄语词典"></label>
       <label><span>官方网址</span><input class="text-input" id="resourceUrl" type="url" required inputmode="url" placeholder="https://…"></label>
-      <label><span>分类</span><select id="resourceCategory" required><option value="">请选择</option><option>系统课程</option><option>词典与翻译</option><option>听说与输入</option><option>语言交流</option><option>俄语求职</option><option>留学生兼职</option><option>全球社交</option><option>公开资料</option><option>学习工具</option></select></label>
+      <label><span>分类</span><select id="resourceCategory" required><option value="">请选择</option><option>俄语课程</option><option>词典与翻译</option><option>听读材料</option><option>找语伴</option><option>留学与在俄生活</option><option>伊尔库茨克国立大学</option><option>俄语求职</option><option>留学生兼职</option><option>社群</option><option>网盘与馆藏</option><option>学习工具</option></select></label>
       <label class="wide"><span>推荐理由</span><textarea class="text-input" id="resourceReason" rows="4" maxlength="600" placeholder="它适合谁、解决什么问题、是否收费？"></textarea></label>
       <label class="consent wide"><input id="resourceConsent" type="checkbox" required><span>我已检查该地址为官方或可信公开来源，且没有提交盗版、破解或来源不明的下载。</span></label>
       <div class="wide form-actions"><button class="primary" type="submit">在 GitHub 提交推荐 ↗</button><span id="formStatus" role="status" aria-live="polite"></span></div>
