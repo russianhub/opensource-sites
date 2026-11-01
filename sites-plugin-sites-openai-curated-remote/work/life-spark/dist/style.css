@@ -2210,3 +2210,34 @@ nav>.links a:focus-visible{
   .mascot-dock .mascot-bubble{transition:none}
   .mascot-dock.is-dragging .mascot-figure{transform:none}
 }
+
+/* v48 搜索框与搜索引擎图标 */
+.search-ic{
+  flex:none;
+  width:19px;
+  height:19px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.7;
+  stroke-linecap:round;
+  color:var(--ink-3);
+}
+.engine-chip{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+}
+.engine-ico{
+  display:block;
+  width:15px;
+  height:15px;
+  flex:none;
+  object-fit:contain;
+}
+@media(max-width:760px){
+  .engine-chip{gap:5px}
+  .engine-ico{width:14px;height:14px}
+}
+[data-mode="dark"] .engine-chip[data-engine="baidu"] .engine-ico{filter:brightness(1.55)}
+[data-mode="dark"] .engine-chip[data-engine="bing"] .engine-ico{filter:brightness(1.2)}
