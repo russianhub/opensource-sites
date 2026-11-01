@@ -32,11 +32,11 @@ assert(sites.every(x=>/^https:\/\//.test(x.url)),'all resources must use HTTPS')
 assert(!data.match(/破解|盗版下载|网盘提取码/),'resource data must not advertise unauthorized copies');
 assert(html.indexOf('id="pangyi"')<html.indexOf('id="navs"'),'Pangyi should stay visible near the top');
 assert(html.includes('俄语星球')&&html.includes('俄语资源导航'),'expect Russian-learning identity');
-assert(html.includes('russian-data.js?v=7')&&html.indexOf('russian-data.js')<html.indexOf('app.js?v=17'),'resource data must load before app');
+assert(html.includes('russian-data.js?v=7')&&html.indexOf('russian-data.js')<html.indexOf('app.js?v=18'),'resource data must load before app');
 for(const id of ['navs','nav-web','nav-app','nav-tool','nav-media','nav-russia','nav-isu','nav-job','nav-parttime','nav-shop','nav-core','nav-ai','planner','ideas','quiz'])assert(html.includes(`id="${id}"`),id);
 assert(app.includes('window.RUSSIAN_SITES||legacySites'),'expect safe resource-data fallback');
 assert(css.includes('.resource-note')&&css.includes('prefers-reduced-motion'),'expect disclosure and motion accessibility');
-assert(html.includes('style.css?v=41')&&css.includes('v41 资源导航工作台重构')&&css.includes('v39 俄语星球品牌重塑'),'expect redesigned resource-first theme');
+assert(html.includes('style.css?v=43')&&css.includes('v43 首屏预览页脚与图标呼应')&&css.includes('v42 浅色简约')&&css.includes('v41 资源导航工作台重构')&&css.includes('v39 俄语星球品牌重塑'),'expect redesigned resource-first theme');
 assert(html.includes("localStorage.getItem('sparkMode')||'light'"),'expect light editorial theme as first-visit default');
 assert(html.includes('id="study-desk"')&&html.includes('data-study-task="words"'),'expect daily study desk');
 assert(app.includes('russianStudy:')&&app.includes('SpeechSynthesisUtterance')&&app.includes('renderStudy()'),'expect saved daily tasks and pronunciation');
@@ -44,7 +44,7 @@ assert(app.includes('www.google.com/s2/favicons')&&app.includes("siteIcon(s,'hap
 assert(html.includes('manifest.webmanifest')&&html.includes('rel="canonical"')&&html.includes('application/ld+json'),'expect PWA and search metadata');
 assert(html.includes('id="sharePhrase"')&&html.includes('id="studyStreak"')&&app.includes('navigator.share')&&app.includes('russianStudyHistory'),'expect shareable daily study streak');
 assert(app.includes("serviceWorker.register('./sw.js')"),'expect offline service worker registration');
-for(const file of ['manifest.webmanifest','sw.js','robots.txt','sitemap.xml','pwa-192.png','pwa-512.png'])assert(fs.existsSync('dist/'+file),file);
+for(const file of ['manifest.webmanifest','sw.js','robots.txt','sitemap.xml','favicon.svg','favicon-32.png','favicon-180.png','pwa-192.png','pwa-512.png','pwa-maskable-512.png','og-image.jpg'])assert(fs.existsSync('dist/'+file),file);
 for(const file of ['assets/pangyi/icon-128.png','assets/pangyi/candidate-window.png'])assert(fs.existsSync('dist/'+file),file);
 assert(sites.filter(x=>x.cat==='job').every(x=>x.url.startsWith('https://'))&&html.includes('核验招聘方身份'),'expect safe HTTPS employment resources');
 assert(sites.filter(x=>x.cat==='parttime').length===16&&html.includes('studyinrussia.ru/en/education')&&html.includes('免工作许可'),'expect student part-time resources with official eligibility guidance');
@@ -86,7 +86,7 @@ assert(css.includes('v34 留学资源二级筛选')&&css.includes('.resource-sub
 assert(html.indexOf('data-target="nav-isu"')<html.indexOf('data-target="nav-web"'),'ISU must be the first named category shortcut');
 assert(app.includes('function arrangeHomepage()')&&app.includes("['#navs','#nav-isu','#pangyi'")&&app.includes("'#nav-ai','#study-desk','.hero','.user-test-callout'"),'expect search, ISU, Pangyi, resources and study plan in the requested order');
 assert(css.includes('.search-panel{padding-top:38px;padding-bottom:34px}')&&css.includes('.isu-panel+.pangyi-feature'),'expect compact first screen and Pangyi directly below the priority category');
-assert(fs.readFileSync('dist/sw.js','utf8').includes("russian-world-v47")&&fs.readFileSync('dist/sw.js','utf8').includes("'./style.css?v=41'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./app.js?v=17'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./auth-config.js?v=2'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./auth-pages.js?v=3'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./agent.js?v=1'"),'expect refreshed offline cache for redesigned homepage, email OTP login and AI agent');
+assert(fs.readFileSync('dist/sw.js','utf8').includes("russian-world-v49")&&fs.readFileSync('dist/sw.js','utf8').includes("'./style.css?v=43'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./pwa-maskable-512.png'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./app.js?v=18'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./auth-config.js?v=2'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./auth-pages.js?v=3'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./agent.js?v=1'"),'expect refreshed offline cache for redesigned homepage, email OTP login and AI agent');
 const publicHtml=fs.readdirSync('dist').filter(file=>file.endsWith('.html')).map(file=>fs.readFileSync(`dist/${file}`,'utf8')).join('\n');
 const agent=fs.readFileSync('dist/agent.html','utf8'),agentJs=fs.readFileSync('dist/agent.js','utf8');
 assert(html.includes('href="agent.html"')&&agent.includes('AI 学习助理')&&agent.includes('agent.js?v=1'),'expect a discoverable AI learning agent');

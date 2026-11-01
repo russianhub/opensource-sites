@@ -6,8 +6,8 @@
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f7fafb",
-  "theme_color": "#123047",
+  "background_color": "#F8F6F1",
+  "theme_color": "#F8F6F1",
   "shortcuts": [
     {"name": "完整资源目录", "short_name": "资源目录", "url": "./resources.html"},
     {"name": "我的俄语学习", "short_name": "我的学习", "url": "./dashboard.html"},
@@ -19,6 +19,7 @@
   ],
   "icons": [
     {"src": "pwa-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
-    {"src": "pwa-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+    {"src": "pwa-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "pwa-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
   ]
 }

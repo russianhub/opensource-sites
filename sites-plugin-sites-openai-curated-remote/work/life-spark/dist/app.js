@@ -120,7 +120,7 @@ function save(id){
 
 function render(){
   const list=ideas.filter(i=>filter==='all'||(filter==='saved'?saved.includes(i.id):i.type===filter));
-  $('#count').textContent=saved.length;
+  const count=$('#count');if(count)count.textContent=saved.length;
   $('#cards').innerHTML=list.length?list.map(i=>`<article class="tile"><div class="tile-icon" aria-hidden="true"><div class="tile-badges"><b>${timeText(i)}</b><b>${costText(i)}</b></div>${ideaArt(i.id)}</div><div class="tile-body"><h3>${i.title}</h3><p>${i.desc}</p><div class="actions"><button class="save" data-view="${i.id}">查看行动清单 ↗</button><button class="save" data-save="${i.id}" aria-pressed="${saved.includes(i.id)}">${saved.includes(i.id)?'♥ 已收藏':'♡ 收藏'}</button></div></div></article>`).join(''):'<p class="empty">还没有收藏。先在灵感卡片上点一下“收藏”，以后可以回来找。</p>';
   document.querySelectorAll('[data-filter]').forEach(b=>{const active=b.dataset.filter===filter;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});
 }
@@ -216,7 +216,7 @@ $('#cards').onclick=e=>{
 
 document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;render()});
 
-$('#savedLink').onclick=()=>{filter='saved';render()};
+const savedLink=$('#savedLink');if(savedLink)savedLink.onclick=()=>{filter='saved';render()};
 
 const syncModeToggle=()=>{const dark=document.documentElement.dataset.mode==='dark';$('#modeToggle').setAttribute('aria-pressed',String(dark));$('#modeToggle').setAttribute('aria-label',dark?'切换到浅色模式':'切换到深色模式')};
 syncModeToggle();
