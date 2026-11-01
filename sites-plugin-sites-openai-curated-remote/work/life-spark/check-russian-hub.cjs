@@ -150,7 +150,14 @@ const guide=fs.readFileSync('dist/igu-guide.html','utf8');
 assert(guide.includes('ИГУ 新生指南')&&guide.includes('id="checklist"')&&guide.includes('id="faq"')&&guide.includes('不是学校发布的官方清单'),'expect a cautious ISU freshman guide');
 assert(sites.filter(x=>x.cat==='isu').every(x=>guide.includes(`href="${x.url}"`)),'guide must embed every existing ISU resource URL');
 const guideUrls=[...guide.matchAll(/https:\/\/[^"'\\\s<]+/g)].map(match=>match[0].replace(/&amp;/g,'&'));
-const knownUrls=new Set([...sites.map(x=>x.url),'https://russianhub.github.io/opensource-sites/igu-guide.html','https://russianhub.github.io/opensource-sites/og-image.jpg?v=50']);
+const knownUrls=new Set([...sites.map(x=>x.url),'https://russianhub.github.io/opensource-sites/','https://russianhub.github.io/opensource-sites/igu-guide.html','https://russianhub.github.io/opensource-sites/og-image.jpg?v=50','https://schema.org']);
 assert(guideUrls.every(url=>knownUrls.has(url)),`guide contains a link outside the curated catalog: ${guideUrls.filter(url=>!knownUrls.has(url)).join(', ')}`);
 assert(sitemap.includes('/igu-guide.html')&&fs.readFileSync('dist/sw.js','utf8').includes("'./igu-guide.html'"),'expect the guide to be indexed and available offline');
+const robots=fs.readFileSync('dist/robots.txt','utf8');
+assert(robots.includes('Sitemap: https://russianhub.github.io/opensource-sites/sitemap.xml')&&robots.includes('Disallow: /opensource-sites/dashboard.html')&&robots.includes('Disallow: /opensource-sites/auth.html'),'expect project-site robots rules and the real Pages sitemap');
+for(const file of ['index.html','resources.html','igu-guide.html','agent.html','roadmap.html','vocabulary.html','practice.html','about.html','submit.html','status.html']){
+  const page=fs.readFileSync('dist/'+file,'utf8');
+  assert(page.includes('<title>')&&page.includes('name="description"')&&page.includes('rel="canonical"')&&page.includes('application/ld+json')&&page.includes('https://russianhub.github.io/opensource-sites'),`${file} needs its own title, description, canonical and structured data`);
+}
+assert(!sitemap.includes('/auth.html')&&!sitemap.includes('/account.html')&&!sitemap.includes('/admin.html')&&!sitemap.includes('/test.html')&&!sitemap.includes('/dashboard.html'),'private pages stay out of the sitemap');
 console.log('Passed: Russian hub identity, 171 HTTPS resources including 28 Russia-study and 22 ISU links, complete local icons, safety disclosures, Pangyi prominence, original tools and accessibility hooks.');
