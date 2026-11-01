@@ -25,25 +25,45 @@ const itemList={
   '@context':'https://schema.org','@type':'ItemList',name:'俄语星球资源目录',numberOfItems:sites.length,
   itemListElement:sites.map((site,index)=>({'@type':'ListItem',position:index+1,name:site.name,url:site.url}))
 };
+const directoryUrl='https://russianhub.github.io/opensource-sites/resources.html';
+const directoryDescription=`${sites.length} 个俄语学习与留俄入口，按课程、词典、听读材料、找语伴、留学与在俄生活、伊尔库茨克国立大学、求职兼职、社群和网盘馆藏分类。每条都有推荐理由和评级。`;
+const webPage={
+  '@context':'https://schema.org','@type':'WebPage',name:'俄语学习与留俄资源目录',url:directoryUrl,inLanguage:'zh-CN',
+  description:directoryDescription,
+  isPartOf:{'@type':'WebSite',name:'俄语星球',url:'https://russianhub.github.io/opensource-sites/'},
+  breadcrumb:{'@type':'BreadcrumbList',itemListElement:[
+    {'@type':'ListItem',position:1,name:'俄语星球',item:'https://russianhub.github.io/opensource-sites/'},
+    {'@type':'ListItem',position:2,name:'资源目录',item:directoryUrl}
+  ]}
+};
 const html=`<!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#F8F2E8">
-<meta name="description" content="俄语星球完整资源目录：俄语课程、词典与翻译、听读材料、找语伴、留学与在俄生活、伊尔库茨克国立大学、求职兼职、社群、网盘与馆藏和学习工具。">
+<meta name="description" content="${directoryDescription}">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="canonical" href="https://russianhub.github.io/opensource-sites/resources.html">
-<title>完整俄语资源目录 · 俄语星球</title>
+<title>俄语学习与留俄资源目录 · 俄语星球</title>
 <link rel="icon" href="favicon.svg?v=44" type="image/svg+xml"><link rel="icon" href="favicon-32.png?v=44" sizes="32x32"><link rel="apple-touch-icon" href="favicon-180.png?v=44">
-<link rel="stylesheet" href="style.css?v=51">
+<link rel="stylesheet" href="style.css?v=52">
 <meta property="og:type" content="website">
-<meta property="og:title" content="完整俄语资源目录 · 俄语星球">
-<meta property="og:description" content="${sites.length} 个经过整理的俄语课程、词典、留学、校园服务、求职与学习工具入口。">
+<meta property="og:site_name" content="俄语星球">
+<meta property="og:title" content="俄语学习与留俄资源目录 · 俄语星球">
+<meta property="og:description" content="${directoryDescription}">
 <meta property="og:url" content="https://russianhub.github.io/opensource-sites/resources.html">
-<meta property="og:image" content="https://russianhub.github.io/opensource-sites/og-image.jpg?v=44">
+<meta property="og:image" content="https://russianhub.github.io/opensource-sites/og-image.jpg?v=50">
+<meta property="og:image:alt" content="俄语星球：171 个精选俄语学习与留学资源，每条都有推荐理由和评级">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="俄语学习与留俄资源目录 · 俄语星球">
+<meta name="twitter:description" content="${directoryDescription}">
+<meta name="twitter:image" content="https://russianhub.github.io/opensource-sites/og-image.jpg?v=50">
 <script type="application/ld+json">${JSON.stringify(itemList).replace(/</g,'\\u003c')}</script>
+<script type="application/ld+json">${JSON.stringify(webPage).replace(/</g,'\\u003c')}</script>
 </head>
 <body class="directory-page">
 <a class="skip-link" href="#directory-main">跳到资源目录</a>

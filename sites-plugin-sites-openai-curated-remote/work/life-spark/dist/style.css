@@ -2680,3 +2680,83 @@ footer{margin-left:0;margin-right:0}
 .search-panel .engine-chip,.engine-chip{flex:none;white-space:nowrap}
 .resource-subfilters{flex-wrap:wrap;overflow:visible;row-gap:2px}
 .resource-subfilter{white-space:normal}
+/* v50 侧边栏宣传与分享卡片 */
+.promo-poster{
+  display:block;
+  background:#f6ede2;
+  color:#241f1a;
+  text-decoration:none;
+}
+.promo-poster img{
+  width:100%;
+  height:auto;
+  background:#f6ede2;
+}
+.promo-caption{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  padding:2px 18px 16px;
+}
+.promo-kicker{
+  color:#a84a32;
+  font-size:11px;
+  font-weight:650;
+  letter-spacing:.14em;
+}
+.promo-caption strong{
+  color:#241f1a;
+  font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',Georgia,'Times New Roman',serif;
+  font-size:22px;
+  font-weight:700;
+  line-height:1.3;
+  letter-spacing:-.03em;
+}
+.promo-lead{
+  color:#5d554c;
+  font-size:12.5px;
+  line-height:1.65;
+}
+.promo-go{
+  margin-top:2px;
+  color:#a84a32;
+  font-size:12.5px;
+  font-weight:650;
+}
+.promo-go i{margin-left:2px;font-style:normal}
+.promo-poster:hover .promo-go{text-decoration:underline}
+.promo-guide{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center;
+  gap:12px;
+  padding:13px 16px;
+  border-top:1px solid var(--line);
+  background:var(--card);
+  color:var(--ink);
+}
+.promo-guide-mark{
+  display:grid;
+  place-items:center;
+  min-width:52px;
+  height:34px;
+  padding:0 8px;
+  border-radius:8px;
+  background:var(--accent-soft);
+  color:var(--accent);
+  font:700 13px/1 Georgia,'Times New Roman',serif;
+  letter-spacing:.04em;
+}
+.promo-guide-copy{display:flex;min-width:0;flex-direction:column;gap:2px}
+.promo-guide-copy b{font-size:13.5px;font-weight:650;line-height:1.35}
+.promo-guide-copy small{color:var(--ink-3);font-size:12px;line-height:1.5}
+.promo-guide>i{color:var(--ru-red);font-style:normal;font-weight:650}
+.promo-guide:hover{background:var(--win-2)}
+@media(max-width:560px){
+  .promo-caption{padding:2px 14px 14px}
+  .promo-caption strong{font-size:20px}
+  .promo-guide{gap:10px;padding:12px 14px}
+  .promo-guide-copy small{font-size:11.5px}
+}
+
+/* v52 侧边栏宣传区：接在 v51 陶土配色之后。 */

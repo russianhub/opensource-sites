@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F8F2E8"/>
+      <stop offset="1" stop-color="#F0D9C8"/>
+    </linearGradient>
+    <filter id="lift" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#6A3A28" flood-opacity=".14"/>
+    </filter>
+  </defs>
+  <rect width="720" height="280" fill="url(#paper)"/>
+  <circle cx="118" cy="214" r="92" fill="#E7CDBB" opacity=".55"/>
+  <g fill="#C2603F">
+    <circle cx="48" cy="46" r="3.2" opacity=".28"/>
+    <circle cx="66" cy="62" r="2" opacity=".2"/>
+    <circle cx="36" cy="72" r="1.6" opacity=".22"/>
+  </g>
+  <g transform="translate(548 146)" fill="none" stroke="#C2603F" stroke-linecap="round">
+    <circle r="86" stroke-opacity=".16" stroke-width="1.4"/>
+    <circle r="112" stroke-opacity=".1" stroke-width="1.4"/>
+    <path d="M0.0 -18.0L0.0 -62.0" stroke-width="5.2"/>
+    <path d="M9.0 -15.6L39.0 -67.5" stroke-width="4.2"/>
+    <path d="M15.6 -9.0L53.7 -31.0" stroke-width="4.2"/>
+    <path d="M18.0 0.0L78.0 0.0" stroke-width="5.2"/>
+    <path d="M15.6 9.0L53.7 31.0" stroke-width="4.2"/>
+    <path d="M9.0 15.6L39.0 67.5" stroke-width="4.2"/>
+    <path d="M0.0 18.0L0.0 62.0" stroke-width="5.2"/>
+    <path d="M-9.0 15.6L-39.0 67.5" stroke-width="4.2"/>
+    <path d="M-15.6 9.0L-53.7 31.0" stroke-width="4.2"/>
+    <path d="M-18.0 0.0L-78.0 0.0" stroke-width="5.2"/>
+    <path d="M-15.6 -9.0L-53.7 -31.0" stroke-width="4.2"/>
+    <path d="M-9.0 -15.6L-39.0 -67.5" stroke-width="4.2"/>
+  </g>
+  <circle cx="548" cy="146" r="7.5" fill="#F8F2E8" stroke="#C2603F" stroke-width="3"/>
+  <g filter="url(#lift)" transform="translate(132 34) rotate(-7)">
+    <rect width="176" height="118" rx="18" fill="#FFFCF8"/>
+    <text x="18" y="68" font-family="Georgia,'Times New Roman',serif" font-size="46" font-weight="700" fill="#A84A32">171</text>
+    <text x="20" y="94" font-family="Georgia,'Times New Roman',serif" font-size="13" letter-spacing="1.6" fill="#8C7468">CURATED</text>
+  </g>
+  <g filter="url(#lift)" transform="translate(286 132) rotate(5)">
+    <rect width="188" height="104" rx="18" fill="#FFFCF8"/>
+    <g fill="#C2603F" transform="translate(16 28)">
+      <path d="M12 2.2l2.4 6.6 7 .5-5.4 4.4 1.8 6.8L12 16.8 6.2 20.5l1.8-6.8L2.6 9.3l7-.5z"/>
+      <path d="M40 2.2l2.4 6.6 7 .5-5.4 4.4 1.8 6.8L40 16.8 34.2 20.5l1.8-6.8L30.6 9.3l7-.5z"/>
+      <path d="M68 2.2l2.4 6.6 7 .5-5.4 4.4 1.8 6.8L68 16.8 62.2 20.5l1.8-6.8L58.6 9.3l7-.5z"/>
+      <path d="M96 2.2l2.4 6.6 7 .5-5.4 4.4 1.8 6.8L96 16.8 90.2 20.5l1.8-6.8L86.6 9.3l7-.5z"/>
+    </g>
+    <path transform="translate(112 30)" fill="#E7D5C8" d="M12 2.2l2.4 6.6 7 .5-5.4 4.4 1.8 6.8L12 16.8 6.2 20.5l1.8-6.8L2.6 9.3l7-.5z"/>
+    <text x="18" y="84" font-family="Georgia,'Times New Roman',serif" font-size="14" fill="#5C5148">1-5</text>
+  </g>
+  <g filter="url(#lift)" transform="translate(438 36) rotate(8)">
+    <rect width="158" height="108" rx="18" fill="#3A2820"/>
+    <text x="18" y="52" font-family="Georgia,'Times New Roman',serif" font-size="32" font-weight="700" fill="#F8F2E8">&#1048;&#1043;&#1059;</text>
+    <text x="18" y="80" font-family="Georgia,'Times New Roman',serif" font-size="13" letter-spacing="1.4" fill="#E7C4B4">GUIDE</text>
+  </g>
+</svg>
