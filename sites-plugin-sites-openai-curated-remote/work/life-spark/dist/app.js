@@ -267,11 +267,27 @@ const siteIcon=(s,className='site-icon')=>{
   const last=origin;
   return `<span class="${className}"><b>${initial}</b><img src="${icon}" alt="" loading="lazy" decoding="async" data-fallback="${fallback}" data-last="${last}" onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;delete this.dataset.fallback}else if(this.dataset.last){this.src=this.dataset.last;delete this.dataset.last}else{this.remove()}"></span>`;
 };
+const escapeHtml=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+const cleanList=value=>Array.isArray(value)?value.filter(item=>typeof item==='string'&&item.trim()).map(item=>item.trim()):[];
+const siteRecommend=s=>{
+  const rating=Number(s.rating);
+  const hasRating=Number.isInteger(rating)&&rating>=1&&rating<=5;
+  const why=typeof s.why_recommend==='string'?s.why_recommend.trim():'';
+  const chips=[...cleanList(s.level),...cleanList(s.scene)];
+  if(!hasRating&&!why&&!chips.length)return {html:'',aria:''};
+  const stars=hasRating?`<span class="site-rating" aria-hidden="true">${'<b>★</b>'.repeat(rating)}${'<span>☆</span>'.repeat(5-rating)}</span>`:'';
+  const whyHtml=why?`<i class="site-why">${escapeHtml(why)}</i>`:'';
+  const chipHtml=chips.length?`<span class="site-chips">${chips.map(item=>`<em class="site-chip">${escapeHtml(item)}</em>`).join('')}</span>`:'';
+  const sentence=why?(/[。.!！]$/.test(why)?why:`${why}。`):'';
+  const aria=`${hasRating?`推荐 ${rating} 分。`:''}${sentence}`;
+  return {html:`<span class="site-recommend">${stars}${whyHtml}${chipHtml}</span>`,aria};
+};
 const siteTile=s=>{
   const c=hotCount(s);
   const favored=favoriteKeys.has(s.key);
   const host=siteHost(s);
-  return `<article class="site${c>=2?' hot':''}${favored?' is-favorite':''}"><a class="site-main" href="${s.url}" target="_blank" rel="noopener" data-site="${s.key}" aria-label="${s.name}：${s.desc}。来源 ${host}，基础核验 ${RESOURCE_REVIEW_DATE}，在新窗口打开">${siteIcon(s)}${c>=2?'<span class="site-hot">常逛</span>':''}<span class="site-text"><b class="site-name">${s.name}</b>${s.tag?`<em class="site-badge">${s.tag}</em>`:''}<i class="site-desc">${s.desc}</i><small class="site-meta"><span>${host}</span><time datetime="${RESOURCE_REVIEW_DATE}">基础核验 ${RESOURCE_REVIEW_DATE}</time></small></span><span class="site-go" aria-hidden="true">↗</span></a><span class="site-actions"><button class="site-favorite" type="button" data-favorite="${s.key}" aria-label="${favored?'取消收藏':'收藏'} ${s.name}" aria-pressed="${favored}"><span aria-hidden="true">★</span></button><button class="site-report" type="button" data-report="${s.key}" aria-label="报告 ${s.name} 链接失效"><span aria-hidden="true">!</span></button></span></article>`;
+  const recommend=siteRecommend(s);
+  return `<article class="site${c>=2?' hot':''}${favored?' is-favorite':''}"><a class="site-main" href="${s.url}" target="_blank" rel="noopener" data-site="${s.key}" aria-label="${escapeHtml(s.name)}：${escapeHtml(s.desc)}。${escapeHtml(recommend.aria)}来源 ${escapeHtml(host)}，基础核验 ${RESOURCE_REVIEW_DATE}，在新窗口打开">${siteIcon(s)}${c>=2?'<span class="site-hot">常逛</span>':''}<span class="site-text"><b class="site-name">${s.name}</b>${s.tag?`<em class="site-badge">${s.tag}</em>`:''}<i class="site-desc">${s.desc}</i><small class="site-meta"><span>${host}</span><time datetime="${RESOURCE_REVIEW_DATE}">基础核验 ${RESOURCE_REVIEW_DATE}</time></small>${recommend.html}</span><span class="site-go" aria-hidden="true">↗</span></a><span class="site-actions"><button class="site-favorite" type="button" data-favorite="${s.key}" aria-label="${favored?'取消收藏':'收藏'} ${s.name}" aria-pressed="${favored}"><span aria-hidden="true">★</span></button><button class="site-report" type="button" data-report="${s.key}" aria-label="报告 ${s.name} 链接失效"><span aria-hidden="true">!</span></button></span></article>`;
 };
 
 function renderSites(q){
@@ -279,7 +295,10 @@ function renderSites(q){
   let total=0;
   for(const cat in SITE_CATS){
     const group=RESOURCE_GROUP_STATE[cat]||'all';
-    const list=sites.filter(s=>s.cat===cat&&(group==='all'||s.group===group)&&(!favoritesOnly||favoriteKeys.has(s.key))&&(!q||(s.name+s.desc).toLowerCase().includes(q)));
+    const list=sites.filter(s=>{
+      const extra=[s.why_recommend,...cleanList(s.level),...cleanList(s.scene)].filter(Boolean).join(' ').toLowerCase();
+      return s.cat===cat&&(group==='all'||s.group===group)&&(!favoritesOnly||favoriteKeys.has(s.key))&&(!q||(s.name+s.desc).toLowerCase().includes(q)||extra.includes(q));
+    });
     const [el,panel]=SITE_CATS[cat];
     $(el).innerHTML=list.map(siteTile).join('');
     $(panel).hidden=!list.length;

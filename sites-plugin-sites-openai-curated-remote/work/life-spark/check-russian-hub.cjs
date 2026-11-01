@@ -32,11 +32,11 @@ assert(sites.every(x=>/^https:\/\//.test(x.url)),'all resources must use HTTPS')
 assert(!data.match(/破解|盗版下载|网盘提取码/),'resource data must not advertise unauthorized copies');
 assert(html.indexOf('id="pangyi"')<html.indexOf('id="navs"'),'Pangyi should stay visible near the top');
 assert(html.includes('俄语星球')&&html.includes('俄语资源导航'),'expect Russian-learning identity');
-assert(html.includes('russian-data.js?v=7')&&html.indexOf('russian-data.js')<html.indexOf('app.js?v=18'),'resource data must load before app');
+assert(html.includes('russian-data.js?v=8')&&html.indexOf('russian-data.js')<html.indexOf('app.js?v=19'),'resource data must load before app');
 for(const id of ['navs','nav-web','nav-app','nav-tool','nav-media','nav-russia','nav-isu','nav-job','nav-parttime','nav-shop','nav-core','nav-ai','planner','ideas','quiz'])assert(html.includes(`id="${id}"`),id);
 assert(app.includes('window.RUSSIAN_SITES||legacySites'),'expect safe resource-data fallback');
 assert(css.includes('.resource-note')&&css.includes('prefers-reduced-motion'),'expect disclosure and motion accessibility');
-assert(html.includes('style.css?v=48')&&css.includes('v48 搜索框与搜索引擎图标')&&css.includes('v47 小星可自由拖动')&&css.includes('v46 小星悬浮助手')&&css.includes('v45 导航细节精修')&&css.includes('v44 珊瑚陶土品牌与星芒图标')&&css.includes('v43 首屏预览页脚与图标呼应')&&css.includes('v42 浅色简约')&&css.includes('v41 资源导航工作台重构')&&css.includes('v39 俄语星球品牌重塑'),'expect redesigned resource-first theme');
+assert(html.includes('style.css?v=49')&&css.includes('v49 资源推荐与 ИГУ 新生指南')&&css.includes('v48 搜索框与搜索引擎图标')&&css.includes('v47 小星可自由拖动')&&css.includes('v46 小星悬浮助手')&&css.includes('v45 导航细节精修')&&css.includes('v44 珊瑚陶土品牌与星芒图标')&&css.includes('v43 首屏预览页脚与图标呼应')&&css.includes('v42 浅色简约')&&css.includes('v41 资源导航工作台重构')&&css.includes('v39 俄语星球品牌重塑'),'expect redesigned resource-first theme');
 assert(html.includes("localStorage.getItem('sparkMode')||'light'"),'expect light editorial theme as first-visit default');
 assert(html.includes('id="study-desk"')&&html.includes('data-study-task="words"'),'expect daily study desk');
 assert(app.includes('russianStudy:')&&app.includes('SpeechSynthesisUtterance')&&app.includes('renderStudy()'),'expect saved daily tasks and pronunciation');
@@ -86,7 +86,7 @@ assert(css.includes('v34 留学资源二级筛选')&&css.includes('.resource-sub
 assert(html.indexOf('data-target="nav-isu"')<html.indexOf('data-target="nav-web"'),'ISU must be the first named category shortcut');
 assert(app.includes('function arrangeHomepage()')&&app.includes("['#navs','#nav-isu','#pangyi'")&&app.includes("'#nav-ai','#study-desk','.hero','.user-test-callout'"),'expect search, ISU, Pangyi, resources and study plan in the requested order');
 assert(css.includes('.search-panel{padding-top:38px;padding-bottom:34px}')&&css.includes('.isu-panel+.pangyi-feature'),'expect compact first screen and Pangyi directly below the priority category');
-assert(fs.readFileSync('dist/sw.js','utf8').includes("russian-world-v54")&&fs.readFileSync('dist/sw.js','utf8').includes("'./style.css?v=48'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./mascot.js?v=1'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./assets/mascot.svg?v=1'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./assets/engine-icons/baidu.svg'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./pwa-maskable-512.png'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./app.js?v=18'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./auth-config.js?v=2'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./auth-pages.js?v=3'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./agent.js?v=2'"),'expect refreshed offline cache for redesigned homepage, email OTP login and AI agent');
+assert(fs.readFileSync('dist/sw.js','utf8').includes("russian-world-v55")&&fs.readFileSync('dist/sw.js','utf8').includes("'./style.css?v=49'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./igu-guide.html'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./mascot.js?v=1'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./assets/mascot.svg?v=1'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./assets/engine-icons/baidu.svg'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./pwa-maskable-512.png'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./app.js?v=19'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./russian-data.js?v=8'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./auth-config.js?v=2'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./auth-pages.js?v=3'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./agent.js?v=2'"),'expect refreshed offline cache for redesigned homepage, email OTP login and AI agent');
 const publicHtml=fs.readdirSync('dist').filter(file=>file.endsWith('.html')).map(file=>fs.readFileSync(`dist/${file}`,'utf8')).join('\n');
 const agent=fs.readFileSync('dist/agent.html','utf8'),agentJs=fs.readFileSync('dist/agent.js','utf8');
 assert(html.includes('href="agent.html"')&&agent.includes('AI 学习助理')&&agent.includes('agent.js?v=2'),'expect a discoverable AI learning agent');
@@ -139,4 +139,18 @@ assert(sql.includes('enable row level security')&&sql.includes('private.admin_us
 assert(fs.readFileSync('dist/sw.js','utf8').includes("'./auth.html'")&&css.includes('v36 可选登录与运营后台'),'expect offline account shell and intentional account styling');
 new vm.Script(authConfig,{filename:'auth-config.js'});new vm.Script(authClient,{filename:'auth-client.js'});new vm.Script(authPages,{filename:'auth-pages.js'});
 for(const [name,page] of [['about',about],['submit',submit],['test',userTest],['roadmap',roadmap],['vocabulary',vocabulary],['practice',practice],['dashboard',dashboard]])for(const match of page.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)){if(!match[0].includes('application/ld+json'))new vm.Script(match[1],{filename:`${name}.inline.js`})}
+const annotated=sites.filter(x=>Object.hasOwn(x,'rating')||Object.hasOwn(x,'why_recommend')||Object.hasOwn(x,'level')||Object.hasOwn(x,'scene'));
+assert(annotated.length>=30&&annotated.length<=50,'expect 30 to 50 manually annotated resources');
+assert(annotated.every(x=>Number.isInteger(x.rating)&&x.rating>=1&&x.rating<=5&&typeof x.why_recommend==='string'&&x.why_recommend.trim()),'annotated resources need a 1-5 rating and a recommendation');
+assert(annotated.every(x=>!Object.hasOwn(x,'level')||(Array.isArray(x.level)&&x.level.length&&x.level.every(item=>typeof item==='string'&&item.trim()))),'level must be a non-empty string array when present');
+assert(annotated.every(x=>!Object.hasOwn(x,'scene')||(Array.isArray(x.scene)&&x.scene.length&&x.scene.every(item=>typeof item==='string'&&item.trim()))),'scene must be a non-empty string array when present');
+assert(app.includes('function siteRecommend')||app.includes('const siteRecommend')&&app.includes('!hasRating&&!why&&!chips.length')&&app.includes('class="site-recommend"'),'cards must render recommendations and omit them when fields are absent');
+assert(html.includes('class="igu-guide-entry" href="igu-guide.html"')&&html.includes('ИГУ 新生指南'),'expect the ISU freshman guide on the homepage');
+const guide=fs.readFileSync('dist/igu-guide.html','utf8');
+assert(guide.includes('ИГУ 新生指南')&&guide.includes('id="checklist"')&&guide.includes('id="faq"')&&guide.includes('不是学校发布的官方清单'),'expect a cautious ISU freshman guide');
+assert(sites.filter(x=>x.cat==='isu').every(x=>guide.includes(`href="${x.url}"`)),'guide must embed every existing ISU resource URL');
+const guideUrls=[...guide.matchAll(/https:\/\/[^"'\\\s<]+/g)].map(match=>match[0].replace(/&amp;/g,'&'));
+const knownUrls=new Set([...sites.map(x=>x.url),'https://russianhub.github.io/opensource-sites/igu-guide.html','https://russianhub.github.io/opensource-sites/og-image.jpg?v=44']);
+assert(guideUrls.every(url=>knownUrls.has(url)),`guide contains a link outside the curated catalog: ${guideUrls.filter(url=>!knownUrls.has(url)).join(', ')}`);
+assert(sitemap.includes('/igu-guide.html')&&fs.readFileSync('dist/sw.js','utf8').includes("'./igu-guide.html'"),'expect the guide to be indexed and available offline');
 console.log('Passed: Russian hub identity, 171 HTTPS resources including 28 Russia-study and 22 ISU links, complete local icons, safety disclosures, Pangyi prominence, original tools and accessibility hooks.');
