@@ -265,7 +265,7 @@ const siteIcon=(s,className='site-icon')=>{
   const icon=local;
   const fallback=remote;
   const last=origin;
-  return `<span class="${className}"><b>${initial}</b><img src="${icon}" alt="" loading="lazy" decoding="async" data-fallback="${fallback}" data-last="${last}" onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;delete this.dataset.fallback}else if(this.dataset.last){this.src=this.dataset.last;delete this.dataset.last}else{this.remove()}"></span>`;
+  return `<span class="${className}"><b>${initial}</b><img src="${icon}" alt="${s.name} 图标" loading="lazy" decoding="async" data-fallback="${fallback}" data-last="${last}" onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;delete this.dataset.fallback}else if(this.dataset.last){this.src=this.dataset.last;delete this.dataset.last}else{this.remove()}"></span>`;
 };
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const cleanList=value=>Array.isArray(value)?value.filter(item=>typeof item==='string'&&item.trim()).map(item=>item.trim()):[];

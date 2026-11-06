@@ -68,7 +68,7 @@ const html=`<!doctype html>
 <body class="directory-page">
 <a class="skip-link" href="#directory-main">跳到资源目录</a>
 <div class="window">
-<nav aria-label="目录导航"><div class="nav-top"><a class="brand" href="./"><img class="brand-mark" src="favicon.svg?v=44" alt="" width="38" height="38"><div><b>俄语星球</b><small>Russian Hub</small></div></a></div><div class="links"><a href="./">返回首页</a><a href="submit.html">推荐资源</a></div></nav>
+<nav aria-label="目录导航"><div class="nav-top"><a class="brand" href="./"><img class="brand-mark" src="favicon.svg?v=44" alt="俄语星球标志" width="38" height="38"><div><b>俄语星球</b><small>Russian Hub</small></div></a></div><div class="links"><a href="./">返回首页</a><a href="submit.html">推荐资源</a></div></nav>
 <main class="wrap directory-main" id="directory-main" tabindex="-1">
 <header class="directory-hero"><p>不需要 JavaScript 也能看的完整目录</p><h1>${sites.length} 个入口，<br>按目标分开。</h1><div class="directory-jumps" aria-label="跳转到资源分类">${categories.map(([key,label])=>`<a href="#${key}">${label}</a>`).join('')}</div><small>目录基础核验日期：<time datetime="${reviewed}">${reviewed}</time>。核验范围为来源域名、HTTPS 与重复项，不代表平台始终可用或为本站背书。</small></header>
 ${sections}
@@ -77,7 +77,7 @@ ${sections}
 </div>
 <a class="mascot-dock" href="agent.html" aria-label="小星 AI 学习助理，可拖动，点击打开对话" title="拖动小星到任意位置，点击打开 AI 助理">
   <span class="mascot-bubble" aria-hidden="true"><b>小星 · AI 学习助理</b><span>有俄语问题？来问我</span></span>
-  <span class="mascot-figure"><img src="assets/mascot.svg?v=1" alt="" width="64" height="64" decoding="async" draggable="false"></span>
+  <span class="mascot-figure"><img src="assets/mascot.svg?v=1" alt="小星 AI 学习助理形象" width="64" height="64" decoding="async" draggable="false"></span>
 </a>
 <script src="mascot.js?v=1"></script>
 </body>
