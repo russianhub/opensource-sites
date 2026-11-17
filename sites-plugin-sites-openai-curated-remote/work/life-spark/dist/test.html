@@ -57,5 +57,8 @@
   document.getElementById('copyTest').addEventListener('click',function(){var report=buildReport();if(report.error){status.textContent=report.error;return}var text=report.title+'\n\n'+report.body;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){status.textContent='匿名报告已复制。'},function(){status.textContent='复制失败，请使用GitHub提交。'})}else{status.textContent='当前浏览器不支持复制，请使用GitHub提交。'}});
 })();
 </script>
+
+<script src="i18n-dict.js?v=1"></script>
+<script src="i18n.js?v=1"></script>
 </body>
 </html>

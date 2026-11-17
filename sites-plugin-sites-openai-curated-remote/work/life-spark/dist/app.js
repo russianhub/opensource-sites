@@ -297,7 +297,9 @@ function renderSites(q){
     const group=RESOURCE_GROUP_STATE[cat]||'all';
     const list=sites.filter(s=>{
       const extra=[s.why_recommend,...cleanList(s.level),...cleanList(s.scene)].filter(Boolean).join(' ').toLowerCase();
-      return s.cat===cat&&(group==='all'||s.group===group)&&(!favoritesOnly||favoriteKeys.has(s.key))&&(!q||(s.name+s.desc).toLowerCase().includes(q)||extra.includes(q));
+      const fields=[s.name,s.desc,s.tag,s.why_recommend,...cleanList(s.scene)].filter(Boolean);
+      const translated=window.sparkTrAll?fields.flatMap(item=>window.sparkTrAll(item)).join(' ').toLowerCase():'';
+      return s.cat===cat&&(group==='all'||s.group===group)&&(!favoritesOnly||favoriteKeys.has(s.key))&&(!q||(s.name+s.desc).toLowerCase().includes(q)||extra.includes(q)||translated.includes(q));
     });
     const [el,panel]=SITE_CATS[cat];
     $(el).innerHTML=list.map(siteTile).join('');
