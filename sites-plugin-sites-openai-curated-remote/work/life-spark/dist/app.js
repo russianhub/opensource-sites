@@ -255,9 +255,11 @@ let favoritesOnly=false;
 const RESOURCE_REVIEW_DATE='2026-10-28';
 const hotCount=s=>hotMap[s.key]||0;
 const siteHost=s=>{try{return new URL(s.url).hostname.replace(/^www\./,'')}catch{return ''}};
+const ui=value=>window.sparkTr?window.sparkTr(value):value;
 const siteIcon=(s,className='site-icon')=>{
   const host=siteHost(s);
-  const initial=(s.name.trim()[0]||'·').toUpperCase();
+  const shown=ui(s.name);
+  const initial=(shown.trim()[0]||'·').toUpperCase();
   if(!host)return `<span class="${className}"><b>${initial}</b></span>`;
   const remote=`https://www.google.com/s2/favicons?domain=${encodeURIComponent(host)}&sz=64`;
   const origin=`https://${host}/favicon.ico`;
@@ -265,7 +267,7 @@ const siteIcon=(s,className='site-icon')=>{
   const icon=local;
   const fallback=remote;
   const last=origin;
-  return `<span class="${className}"><b>${initial}</b><img src="${icon}" alt="${s.name} 图标" loading="lazy" decoding="async" data-fallback="${fallback}" data-last="${last}" onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;delete this.dataset.fallback}else if(this.dataset.last){this.src=this.dataset.last;delete this.dataset.last}else{this.remove()}"></span>`;
+  return `<span class="${className}"><b>${initial}</b><img src="${icon}" alt="${escapeHtml(ui(s.name+' 图标'))}" loading="lazy" decoding="async" data-fallback="${fallback}" data-last="${last}" onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;delete this.dataset.fallback}else if(this.dataset.last){this.src=this.dataset.last;delete this.dataset.last}else{this.remove()}"></span>`;
 };
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const cleanList=value=>Array.isArray(value)?value.filter(item=>typeof item==='string'&&item.trim()).map(item=>item.trim()):[];
@@ -276,10 +278,10 @@ const siteRecommend=s=>{
   const chips=[...cleanList(s.level),...cleanList(s.scene)];
   if(!hasRating&&!why&&!chips.length)return {html:'',aria:''};
   const stars=hasRating?`<span class="site-rating" aria-hidden="true">${'<b>★</b>'.repeat(rating)}${'<span>☆</span>'.repeat(5-rating)}</span>`:'';
-  const whyHtml=why?`<i class="site-why">${escapeHtml(why)}</i>`:'';
-  const chipHtml=chips.length?`<span class="site-chips">${chips.map(item=>`<em class="site-chip">${escapeHtml(item)}</em>`).join('')}</span>`:'';
+  const whyHtml=why?`<i class="site-why">${escapeHtml(ui(why))}</i>`:'';
+  const chipHtml=chips.length?`<span class="site-chips">${chips.map(item=>`<em class="site-chip">${escapeHtml(ui(item))}</em>`).join('')}</span>`:'';
   const sentence=why?(/[。.!！]$/.test(why)?why:`${why}。`):'';
-  const aria=`${hasRating?`推荐 ${rating} 分。`:''}${sentence}`;
+  const aria=`${hasRating?ui(`推荐 ${rating} 分。`):''}${sentence?ui(sentence):''}`;
   return {html:`<span class="site-recommend">${stars}${whyHtml}${chipHtml}</span>`,aria};
 };
 const siteTile=s=>{
@@ -287,7 +289,8 @@ const siteTile=s=>{
   const favored=favoriteKeys.has(s.key);
   const host=siteHost(s);
   const recommend=siteRecommend(s);
-  return `<article class="site${c>=2?' hot':''}${favored?' is-favorite':''}"><a class="site-main" href="${s.url}" target="_blank" rel="noopener" data-site="${s.key}" aria-label="${escapeHtml(s.name)}：${escapeHtml(s.desc)}。${escapeHtml(recommend.aria)}来源 ${escapeHtml(host)}，基础核验 ${RESOURCE_REVIEW_DATE}，在新窗口打开">${siteIcon(s)}${c>=2?'<span class="site-hot">常逛</span>':''}<span class="site-text"><b class="site-name">${s.name}</b>${s.tag?`<em class="site-badge">${s.tag}</em>`:''}<i class="site-desc">${s.desc}</i><small class="site-meta"><span>${host}</span><time datetime="${RESOURCE_REVIEW_DATE}">基础核验 ${RESOURCE_REVIEW_DATE}</time></small>${recommend.html}</span><span class="site-go" aria-hidden="true">↗</span></a><span class="site-actions"><button class="site-favorite" type="button" data-favorite="${s.key}" aria-label="${favored?'取消收藏':'收藏'} ${s.name}" aria-pressed="${favored}"><span aria-hidden="true">★</span></button><button class="site-report" type="button" data-report="${s.key}" aria-label="报告 ${s.name} 链接失效"><span aria-hidden="true">失效</span></button></span></article>`;
+  const openLabel=`${ui(s.name)}: ${ui(s.desc)}. ${recommend.aria}${ui('来源')} ${host}, ${ui('基础核验 '+RESOURCE_REVIEW_DATE)}, ${ui('在新窗口打开')}`;
+  return `<article class="site${c>=2?' hot':''}${favored?' is-favorite':''}"><a class="site-main" href="${s.url}" target="_blank" rel="noopener" data-site="${s.key}" aria-label="${escapeHtml(openLabel)}">${siteIcon(s)}${c>=2?'<span class="site-hot">常逛</span>':''}<span class="site-text"><b class="site-name">${escapeHtml(ui(s.name))}</b>${s.tag?`<em class="site-badge">${escapeHtml(ui(s.tag))}</em>`:''}<i class="site-desc">${escapeHtml(ui(s.desc))}</i><small class="site-meta"><span>${host}</span><time datetime="${RESOURCE_REVIEW_DATE}">${escapeHtml(ui('基础核验 '+RESOURCE_REVIEW_DATE))}</time></small>${recommend.html}</span><span class="site-go" aria-hidden="true">↗</span></a><span class="site-actions"><button class="site-favorite" type="button" data-favorite="${s.key}" aria-label="${escapeHtml(ui((favored?'取消收藏 ':'收藏 ')+s.name))}" aria-pressed="${favored}"><span aria-hidden="true">★</span></button><button class="site-report" type="button" data-report="${s.key}" aria-label="${escapeHtml(ui('报告 '+s.name+' 链接失效'))}"><span aria-hidden="true">${escapeHtml(ui('失效'))}</span></button></span></article>`;
 };
 
 function renderSites(q){
@@ -317,7 +320,7 @@ function renderSites(q){
 function renderHeroCats(){
   $('#heroApplist').innerHTML=[['isu','伊大 ИГУ','#nav-isu'],['web','俄语课程','#nav-web'],['app','词典翻译','#nav-app'],['tool','听读材料','#nav-tool'],['media','找语伴','#nav-media'],['russia','留学生活','#nav-russia'],['job','俄语求职','#nav-job'],['parttime','留学生兼职','#nav-parttime'],['shop','社群','#nav-shop'],['core','网盘馆藏','#nav-core'],['ai','学习工具','#nav-ai']].map(([c,n,h])=>{
     const s=sites.find(x=>x.cat===c);
-    return `<a class="hap" href="${h}">${siteIcon(s,'hap-ico')}<b>${n}</b><i>${sites.filter(x=>x.cat===c).length} 个入口</i></a>`;
+    return `<a class="hap" href="${h}">${siteIcon(s,'hap-ico')}<b>${escapeHtml(ui(n))}</b><i>${escapeHtml(ui(sites.filter(x=>x.cat===c).length+' 个入口'))}</i></a>`;
   }).join('');
 }
 

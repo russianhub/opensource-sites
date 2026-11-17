@@ -81,7 +81,7 @@ ${sections}
 </a>
 <script src="mascot.js?v=1"></script>
 <script src="i18n-dict.js?v=1"></script>
-<script src="i18n.js?v=1"></script>
+<script src="i18n.js?v=2"></script>
 </body>
 </html>
 `;
