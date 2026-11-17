@@ -1,7 +1,9 @@
 # 俄语星球发布在 GitHub Pages 项目站点，没有自定义域名。
 # 站点：https://russianhub.github.io/opensource-sites/
 # 搜索引擎通常只读取主机根目录的 robots.txt（https://russianhub.github.io/robots.txt）。
-# 本文件随项目站点发布；收录请在站长平台直接提交下面的 sitemap 完整地址。
+# GitHub Pages 项目站点无法在主机根放置 robots.txt。本文件只在项目路径生效：
+# https://russianhub.github.io/opensource-sites/robots.txt
+# 收录请在站长平台直接提交下面的 sitemap 完整地址。
 
 User-agent: *
 Allow: /opensource-sites/

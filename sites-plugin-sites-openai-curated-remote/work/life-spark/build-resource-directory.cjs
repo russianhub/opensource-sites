@@ -26,9 +26,9 @@ const itemList={
   itemListElement:sites.map((site,index)=>({'@type':'ListItem',position:index+1,name:site.name,url:site.url}))
 };
 const directoryUrl='https://russianhub.github.io/opensource-sites/resources.html';
-const directoryDescription=`${sites.length} 个俄语学习与留俄入口，按课程、词典、听读材料、找语伴、留学与在俄生活、伊尔库茨克国立大学、求职兼职、社群和网盘馆藏分类。每条都有推荐理由和评级。`;
+const directoryDescription=`俄语星球：${sites.length} 个俄语学习与留俄入口，按课程、词典、听读材料、找语伴、留学与在俄生活、伊尔库茨克国立大学、求职兼职、社群和网盘馆藏分类。每条都有推荐理由和评级。`;
 const webPage={
-  '@context':'https://schema.org','@type':'WebPage',name:'俄语学习与留俄资源目录',url:directoryUrl,inLanguage:'zh-CN',
+  '@context':'https://schema.org','@type':'WebPage',name:'俄语学习与留俄资源目录 · 俄语星球',url:directoryUrl,inLanguage:'zh-CN',
   description:directoryDescription,
   isPartOf:{'@type':'WebSite',name:'俄语星球',url:'https://russianhub.github.io/opensource-sites/'},
   breadcrumb:{'@type':'BreadcrumbList',itemListElement:[

@@ -290,6 +290,10 @@ const siteTile=s=>{
   return `<article class="site${c>=2?' hot':''}${favored?' is-favorite':''}"><a class="site-main" href="${s.url}" target="_blank" rel="noopener" data-site="${s.key}" aria-label="${escapeHtml(s.name)}：${escapeHtml(s.desc)}。${escapeHtml(recommend.aria)}来源 ${escapeHtml(host)}，基础核验 ${RESOURCE_REVIEW_DATE}，在新窗口打开">${siteIcon(s)}${c>=2?'<span class="site-hot">常逛</span>':''}<span class="site-text"><b class="site-name">${s.name}</b>${s.tag?`<em class="site-badge">${s.tag}</em>`:''}<i class="site-desc">${s.desc}</i><small class="site-meta"><span>${host}</span><time datetime="${RESOURCE_REVIEW_DATE}">基础核验 ${RESOURCE_REVIEW_DATE}</time></small>${recommend.html}</span><span class="site-go" aria-hidden="true">↗</span></a><span class="site-actions"><button class="site-favorite" type="button" data-favorite="${s.key}" aria-label="${favored?'取消收藏':'收藏'} ${s.name}" aria-pressed="${favored}"><span aria-hidden="true">★</span></button><button class="site-report" type="button" data-report="${s.key}" aria-label="报告 ${s.name} 链接失效"><span aria-hidden="true">失效</span></button></span></article>`;
 };
 
+function matchesSiteQuery(q){
+  const compact=String(q||'').toLowerCase().replace(/\s+/g,'');
+  return compact.includes('俄语星球')||compact.includes('russianhub');
+}
 function renderSites(q){
   q=(q||'').trim().toLowerCase();
   let total=0;
@@ -304,7 +308,10 @@ function renderSites(q){
     $(panel).hidden=!list.length;
     total+=list.length;
   }
-  $('#noHit').hidden=total>0;
+  const showSite=matchesSiteQuery(q);
+  const siteHit=$('#siteHit');
+  if(siteHit) siteHit.hidden=!showSite;
+  $('#noHit').hidden=total>0||showSite;
   $('#noHit').textContent=favoritesOnly?'还没有收藏。点资源卡片上的星标，之后可以在这里找回。':'没有对上的条目。换个词，或清空后按分类看。';
   $('#favoriteCount').textContent=favoriteKeys.size;
   $('#favoriteToggle').classList.toggle('active',favoritesOnly);
@@ -367,6 +374,8 @@ document.addEventListener('click',e=>{
 });
 
 renderSites();
+const initialQuery=new URLSearchParams(location.search).get('q');
+if(initialQuery){$('#search').value=initialQuery;$('#searchClear').hidden=!initialQuery.trim();renderSites(initialQuery)}
 renderHeroCats();
 const alignHashTarget=()=>{
   const raw=location.hash.slice(1);
