@@ -2760,3 +2760,18 @@ footer{margin-left:0;margin-right:0}
 }
 
 /* v52 侧边栏宣传区：接在 v51 陶土配色之后。 */
+
+/* v53 语言切换 */
+.lang-switch{display:flex;align-items:center;margin-left:auto;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--win)}
+.nav-right .lang-switch{margin-left:0}
+.lang-switch button{min-width:44px;min-height:36px;padding:0 8px;border:0;background:transparent;color:var(--ink-2);font:700 12px/1 inherit;letter-spacing:.04em;cursor:pointer}
+.lang-switch button+button{border-left:1px solid var(--line)}
+.lang-switch button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.lang-switch button:hover{color:var(--ink)}
+.lang-switch button[aria-pressed="true"]:hover{color:#fff}
+.lang-switch button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+[data-lang="en"] .brand b,[data-lang="ru"] .brand b{letter-spacing:0;font-size:15px}
+@media(max-width:560px){
+  .lang-switch button{min-width:36px;padding:0 6px;font-size:11px}
+  [data-lang="en"] .brand b,[data-lang="ru"] .brand b{font-size:13px}
+}
