@@ -474,6 +474,9 @@ h2{font-size:32px;font-weight:800;letter-spacing:-.5px;line-height:1.4;margin:0 
 .pangyi-actions{display:flex;align-items:center;flex-wrap:wrap;gap:16px;margin-top:26px}
 .pangyi-actions .primary{display:inline-flex;align-items:center;gap:18px}
 .pangyi-actions>span{font-size:11px;color:var(--ink-3)}
+.pangyi-actions .text-link{color:var(--ink-2)}
+.pangyi-copy .pangyi-meta{max-width:570px;margin:12px 0 0;color:var(--ink-3);font-size:11px;line-height:1.7;word-break:break-all;font-family:ui-monospace,'Cascadia Code',Consolas,monospace}
+.pangyi-copy .pangyi-note{max-width:570px;margin:10px 0 0;color:var(--ink-3);font-size:11.5px;line-height:1.8}
 .pangyi-preview{min-width:0;margin:0;padding:12px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:#171620;box-shadow:0 28px 56px rgba(16,18,28,.2);transform:rotate(1deg)}
 .pangyi-previewbar{display:flex;align-items:center;gap:6px;padding:3px 4px 12px;color:#7f7d8d}
 .pangyi-previewbar span{width:7px;height:7px;border-radius:50%;background:#393744}

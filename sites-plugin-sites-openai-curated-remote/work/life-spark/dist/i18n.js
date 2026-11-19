@@ -7,12 +7,20 @@
   const extra={
     en:{
       '俄语学习,俄语词典,俄语翻译,俄语入门,俄语资源,找语伴,旁译输入法':'Russian learning, Russian dictionaries, Russian translation, beginner Russian, Russian resources, language partners, Pangyi input',
-      '俄语星球：171 个精选俄语学习与留学资源，每条都有推荐理由和评级':'Russian Hub: 171 picked resources for learning Russian and studying in Russia, each with a reason and a rating'
+      '俄语星球：171 个精选俄语学习与留学资源，每条都有推荐理由和评级':'Russian Hub: 171 picked resources for learning Russian and studying in Russia, each with a reason and a rating',
+      '下载旁译':'Download Pangyi',
+      '开源仓库':'Source code',
+      '更新于':'Updated',
+      '首次运行若出现 SmartScreen 提示，点「更多信息」→「仍要运行」（个人开发者，暂未购买代码签名证书）。安装后重启已打开的软件，按 Win + 空格 切换到「旁译」。':'On first launch SmartScreen may show a warning — click “More info” → “Run anyway” (independent developer, no code-signing certificate yet). After installing, restart open apps and press Win + Space to switch to Pangyi.'
     },
     ru:{
       '俄语学习,俄语词典,俄语翻译,俄语入门,俄语资源,找语伴,旁译输入法':'изучение русского, словари, перевод, русский для начинающих, ресурсы, языковые партнёры, ввод Pangyi',
       '俄语星球：171 个精选俄语学习与留学资源，每条都有推荐理由和评级':'Русская планета: 171 отобранных ресурсов для изучения русского и учёбы в России, и у каждого есть причина и оценка',
-      '171 个入口，分成学语言、在俄生活、软件和资料。打开的是各网站自己的页面。':'171 записей: изучение языка, жизнь в России, программы и материалы. Каждая ссылка открывает страницу самого сайта.'
+      '171 个入口，分成学语言、在俄生活、软件和资料。打开的是各网站自己的页面。':'171 записей: изучение языка, жизнь в России, программы и материалы. Каждая ссылка открывает страницу самого сайта.',
+      '下载旁译':'Скачать Pangyi',
+      '开源仓库':'Исходный код',
+      '更新于':'Обновлено',
+      '首次运行若出现 SmartScreen 提示，点「更多信息」→「仍要运行」（个人开发者，暂未购买代码签名证书）。安装后重启已打开的软件，按 Win + 空格 切换到「旁译」。':'При первом запуске SmartScreen может показать предупреждение — нажмите «Подробнее» → «Выполнить в любом случае» (независимый разработчик, сертификата подписи кода пока нет). После установки перезапустите открытые программы и нажмите Win + Пробел, чтобы переключиться на Pangyi.'
     }
   };
   for(const code of ['en','ru']) Object.assign(dict[code]||(dict[code]={}), extra[code]);

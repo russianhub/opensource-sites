@@ -26,8 +26,11 @@ for(const tag of html.match(/<a\b[^>]*target="_blank"[^>]*>/gi)||[]){
 }
 
 const tracked=execFileSync('git',['ls-files','--','dist'],{cwd:root,encoding:'utf8'})
-  .split(/\r?\n/).filter(Boolean);
-const allowed=new Set(['.html','.js','.css','.png','.jpg','.jpeg','.svg','.webmanifest','.txt','.xml']);
+  .split(/\r?\n/).filter(Boolean)
+  // dist/download/ 由 pangyi 发版工作流写入（安装包 exe + latest.json），
+  // 不走常规静态文件的大小与扩展名限制。
+  .filter(relative=>!relative.replace(/\\/g,'/').startsWith('dist/download/'));
+const allowed=new Set(['.html','.js','.css','.png','.jpg','.jpeg','.svg','.webmanifest','.txt','.xml','.json']);
 for(const relative of tracked){
   const file=path.join(root,relative);
   assert(fs.existsSync(file),`tracked public file is missing: ${relative}`);
