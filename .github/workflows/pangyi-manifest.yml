@@ -1,6 +1,8 @@
 # 旁译更新清单同步：
 # pangyi 是公开仓库，这里每小时查一次它的最新正式 Release（草稿/预发布自动跳过），
-# 有新版本就把安装包和签名的 latest.json 推进本站的发布目录，Pages 随之重新部署。
+# 有新版本就下载安装包、计算 SHA256 并签名，把 latest.json 推进本站发布目录，
+# Pages 随之重新部署。安装包本身不进网站仓库（>100MB 超出 GitHub 限制），
+# 下载地址直接指向 GitHub Release 直链（公开 CDN）。
 # 不需要任何跨仓库 token；签名用的私钥在 PANGYI_SIGN_KEY secret。
 # 也可以在 Actions 页手动 Run workflow 立即同步。
 name: Sync pangyi update manifest
@@ -33,7 +35,7 @@ jobs:
         id: needsync
         run: |
           VER="${TAG#v}"
-          if [ -f "${SITE_DIR}/latest.json" ] && [ -f "${SITE_DIR}/download/pangyi-v${VER}.exe" ]; then
+          if [ -f "${SITE_DIR}/latest.json" ] && grep -q "\"version\": \"${VER}\"" "${SITE_DIR}/latest.json"; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
@@ -56,22 +58,18 @@ jobs:
           mkdir -p dl
           curl -fL --retry 3 "https://github.com/${PANGYI_REPO}/releases/download/${TAG}/pangyi-${TAG}.exe" -o "dl/pangyi-${TAG}.exe"
           export EXE_PATH="dl/pangyi-${TAG}.exe"
-          export MIRROR_URL="https://github.com/${PANGYI_REPO}/releases/download/${TAG}/pangyi-${TAG}.exe"
+          # 主下载地址 = GitHub Release 直链（安装包不进网站仓库）
+          export DOWNLOAD_BASE="https://github.com/${PANGYI_REPO}/releases/download/${TAG}"
           export RELEASE_BODY="$(python3 -c "import json;print(json.load(open('release.json'))['body'] or '')")"
           python3 .github/scripts/pangyi-make-manifest.py "${SITE_DIR}/latest.json"
+          cat "${SITE_DIR}/latest.json"
 
       - name: 提交并推送（触发 Pages 重新部署）
         if: steps.needsync.outputs.skip != 'true'
         run: |
-          VER="${TAG#v}"
-          DEST="${SITE_DIR}/download"
-          mkdir -p "$DEST"
-          cp "dl/pangyi-${TAG}.exe" "$DEST/pangyi-v${VER}.exe"
-          cp "dl/pangyi-${TAG}.exe" "$DEST/pangyi-latest.exe"
-          # 只保留最近两个版本的安装包
-          ls -1 "$DEST"/pangyi-v*.exe | sort -V | head -n -2 | xargs -r rm -f
+          # 只提交 latest.json；dl/ 是下载暂存，不进仓库
+          git add "${SITE_DIR}/latest.json"
           git config user.name "pangyi-release-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add -A
-          git commit -m "pangyi ${TAG}: update installer and latest.json" || echo "nothing to commit"
+          git commit -m "pangyi ${TAG}: update latest.json" || echo "nothing to commit"
           git push
