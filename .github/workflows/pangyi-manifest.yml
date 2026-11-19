@@ -14,6 +14,12 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   sync:
@@ -64,7 +70,7 @@ jobs:
           python3 .github/scripts/pangyi-make-manifest.py "${SITE_DIR}/latest.json"
           cat "${SITE_DIR}/latest.json"
 
-      - name: 提交并推送（触发 Pages 重新部署）
+      - name: 提交并推送
         if: steps.needsync.outputs.skip != 'true'
         run: |
           # 只提交 latest.json；dl/ 是下载暂存，不进仓库
@@ -73,3 +79,18 @@ jobs:
           git config user.email "bot@users.noreply.github.com"
           git commit -m "pangyi ${TAG}: update latest.json" || echo "nothing to commit"
           git push
+
+      # GITHUB_TOKEN 的推送不会触发 pages.yml（GitHub 防递归），所以这里自己部署。
+      - name: Configure Pages
+        if: steps.needsync.outputs.skip != 'true'
+        uses: actions/configure-pages@v5
+
+      - name: Upload website
+        if: steps.needsync.outputs.skip != 'true'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: sites-plugin-sites-openai-curated-remote/work/life-spark/dist
+
+      - name: Deploy
+        if: steps.needsync.outputs.skip != 'true'
+        uses: actions/deploy-pages@v4
