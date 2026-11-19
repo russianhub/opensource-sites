@@ -1,0 +1,18 @@
+{
+  "version": "4.19.0",
+  "released": "2026-11-19",
+  "notes": [
+    "旁译 v4.19.0",
+    "更新提醒：新增独立更新程序 pangyi-updater。输入法本体保持完全离线，更新检查由它独立完成，只请求版本信息，可在设置里关闭",
+    "设置面板新增「更新」行：检查更新 / 自动 / 关",
+    "发新版后：官网（eyuxq.com）下载按钮自动指向最新安装包，已安装用户下次登录会收到更新提醒",
+    "更新安装包经 ed25519 签名与 SHA256 校验，下载走 HTTPS",
+    "邮箱验证码登录：拒绝未配置和不完整会话，验证码 10 分钟有效、60 秒重发间隔，令牌只经 DPAPI 保存在本机",
+    "旧版本没有更新程序，本次需要手动下载安装一次，之后即可自动收到更新提醒"
+  ],
+  "url": "https://github.com/russianhub/pangyi/releases/download/v4.19.0/pangyi-v4.19.0.exe",
+  "mirrors": [],
+  "sha256": "7e2525baba3544cd2514abc2c12824ce8daae4b45951d6d04be8fd07318b6e57",
+  "size": 193165312,
+  "sig": "/2oe1KeEki09NakJG0qrZGEcJHpozxK8XSgVy2QtsL+Imf2PSb2AM0IZCFI2jaxsoJv+whyYDQI2HY0zrxzuBw=="
+}
