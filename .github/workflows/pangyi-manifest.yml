@@ -1,0 +1,77 @@
+# 旁译更新清单同步：
+# pangyi 是公开仓库，这里每小时查一次它的最新正式 Release（草稿/预发布自动跳过），
+# 有新版本就把安装包和签名的 latest.json 推进本站的发布目录，Pages 随之重新部署。
+# 不需要任何跨仓库 token；签名用的私钥在 PANGYI_SIGN_KEY secret。
+# 也可以在 Actions 页手动 Run workflow 立即同步。
+name: Sync pangyi update manifest
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      SITE_DIR: sites-plugin-sites-openai-curated-remote/work/life-spark/dist
+      PANGYI_REPO: russianhub/pangyi
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 查 pangyi 最新正式发布
+        run: |
+          curl -fsS --retry 3 "https://api.github.com/repos/${PANGYI_REPO}/releases/latest" -o release.json
+          TAG=$(python3 -c "import json;print(json.load(open('release.json'))['tag_name'])")
+          echo "TAG=${TAG}" >> "$GITHUB_ENV"
+          echo "latest release: ${TAG}"
+
+      - name: 已同步过就跳过
+        id: needsync
+        run: |
+          VER="${TAG#v}"
+          if [ -f "${SITE_DIR}/latest.json" ] && [ -f "${SITE_DIR}/download/pangyi-v${VER}.exe" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-python@v5
+        if: steps.needsync.outputs.skip != 'true'
+        with:
+          python-version: "3.12"
+
+      - name: 安装签名依赖
+        if: steps.needsync.outputs.skip != 'true'
+        run: pip install cryptography
+
+      - name: 下载安装包并生成签名清单
+        if: steps.needsync.outputs.skip != 'true'
+        env:
+          SIGN_KEY_PEM: ${{ secrets.PANGYI_SIGN_KEY }}
+        run: |
+          mkdir -p dl
+          curl -fL --retry 3 "https://github.com/${PANGYI_REPO}/releases/download/${TAG}/pangyi-${TAG}.exe" -o "dl/pangyi-${TAG}.exe"
+          export EXE_PATH="dl/pangyi-${TAG}.exe"
+          export MIRROR_URL="https://github.com/${PANGYI_REPO}/releases/download/${TAG}/pangyi-${TAG}.exe"
+          export RELEASE_BODY="$(python3 -c "import json;print(json.load(open('release.json'))['body'] or '')")"
+          python3 .github/scripts/pangyi-make-manifest.py "${SITE_DIR}/latest.json"
+
+      - name: 提交并推送（触发 Pages 重新部署）
+        if: steps.needsync.outputs.skip != 'true'
+        run: |
+          VER="${TAG#v}"
+          DEST="${SITE_DIR}/download"
+          mkdir -p "$DEST"
+          cp "dl/pangyi-${TAG}.exe" "$DEST/pangyi-v${VER}.exe"
+          cp "dl/pangyi-${TAG}.exe" "$DEST/pangyi-latest.exe"
+          # 只保留最近两个版本的安装包
+          ls -1 "$DEST"/pangyi-v*.exe | sort -V | head -n -2 | xargs -r rm -f
+          git config user.name "pangyi-release-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add -A
+          git commit -m "pangyi ${TAG}: update installer and latest.json" || echo "nothing to commit"
+          git push
