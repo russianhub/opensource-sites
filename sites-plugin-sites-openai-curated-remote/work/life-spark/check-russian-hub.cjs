@@ -32,7 +32,7 @@ assert(sites.every(x=>/^https:\/\//.test(x.url)),'all resources must use HTTPS')
 assert(!data.match(/破解|盗版下载|网盘提取码/),'resource data must not advertise unauthorized copies');
 assert(html.indexOf('id="pangyi"')<html.indexOf('id="navs"'),'Pangyi should stay visible near the top');
 assert(html.includes('俄语星球')&&html.includes('俄语资源导航'),'expect Russian-learning identity');
-assert(html.includes('russian-data.js?v=9')&&html.indexOf('russian-data.js')<html.indexOf('app.js?v=22'),'resource data must load before app');
+assert(html.includes('russian-data.js?v=9')&&html.indexOf('russian-data.js')<html.indexOf('app.js?v=23'),'resource data must load before app');
 for(const id of ['navs','nav-web','nav-app','nav-tool','nav-media','nav-russia','nav-isu','nav-job','nav-parttime','nav-shop','nav-core','nav-ai','planner','ideas','quiz'])assert(html.includes(`id="${id}"`),id);
 assert(app.includes('window.RUSSIAN_SITES||legacySites'),'expect safe resource-data fallback');
 assert(css.includes('.resource-note')&&css.includes('prefers-reduced-motion'),'expect disclosure and motion accessibility');
@@ -86,7 +86,7 @@ assert(css.includes('v34 留学资源二级筛选')&&css.includes('.resource-sub
 assert(html.indexOf('data-target="nav-isu"')<html.indexOf('data-target="nav-web"'),'ISU must be the first named category shortcut');
 assert(app.includes('function arrangeHomepage()')&&app.includes("['#navs','#nav-isu','#pangyi'")&&app.includes("'#nav-ai','#study-desk','.hero','.user-test-callout'"),'expect search, ISU, Pangyi, resources and study plan in the requested order');
 assert(css.includes('.search-panel{padding-top:38px;padding-bottom:34px}')&&css.includes('.isu-panel+.pangyi-feature'),'expect compact first screen and Pangyi directly below the priority category');
-assert(fs.readFileSync('dist/sw.js','utf8').includes("russian-world-v62")&&fs.readFileSync('dist/sw.js','utf8').includes("'./i18n.js?v=2'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./i18n-dict.js?v=1'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./style.css?v=52'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./assets/promo-sidebar.svg?v=1'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./igu-guide.html'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./mascot.js?v=1'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./assets/mascot.svg?v=1'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./assets/engine-icons/baidu.svg'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./pwa-maskable-512.png'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./app.js?v=22'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./russian-data.js?v=9'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./auth-config.js?v=2'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./auth-pages.js?v=3'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./agent.js?v=2'"),'expect refreshed offline cache for redesigned homepage, image alt text, email OTP login and AI agent');
+assert(fs.readFileSync('dist/sw.js','utf8').includes("russian-world-v63")&&fs.readFileSync('dist/sw.js','utf8').includes("'./i18n.js?v=2'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./i18n-dict.js?v=1'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./style.css?v=52'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./assets/promo-sidebar.svg?v=1'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./igu-guide.html'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./mascot.js?v=1'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./assets/mascot.svg?v=1'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./assets/engine-icons/baidu.svg'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./pwa-maskable-512.png'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./app.js?v=23'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./russian-data.js?v=9'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./auth-config.js?v=3'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./auth-pages.js?v=3'")&&fs.readFileSync('dist/sw.js','utf8').includes("'./agent.js?v=2'"),'expect refreshed offline cache for redesigned homepage, image alt text, email OTP login and AI agent');
 const publicHtml=fs.readdirSync('dist').filter(file=>file.endsWith('.html')).map(file=>fs.readFileSync(`dist/${file}`,'utf8')).join('\n');
 const agent=fs.readFileSync('dist/agent.html','utf8'),agentJs=fs.readFileSync('dist/agent.js','utf8');
 assert(html.includes('href="agent.html"')&&agent.includes('AI 学习助理')&&agent.includes('agent.js?v=2'),'expect a discoverable AI learning agent');
@@ -150,7 +150,17 @@ const guide=fs.readFileSync('dist/igu-guide.html','utf8');
 assert(guide.includes('ИГУ 新生指南')&&guide.includes('id="checklist"')&&guide.includes('id="faq"')&&guide.includes('不是学校发布的官方清单'),'expect a cautious ISU freshman guide');
 assert(sites.filter(x=>x.cat==='isu').every(x=>guide.includes(`href="${x.url}"`)),'guide must embed every existing ISU resource URL');
 const guideUrls=[...guide.matchAll(/https:\/\/[^"'\\\s<]+/g)].map(match=>match[0].replace(/&amp;/g,'&'));
-const knownUrls=new Set([...sites.map(x=>x.url),'https://russianhub.github.io/opensource-sites/','https://russianhub.github.io/opensource-sites/igu-guide.html','https://russianhub.github.io/opensource-sites/og-image.jpg?v=50','https://russianhub.github.io/opensource-sites/favicon.svg','https://schema.org']);
+
+assert(fs.existsSync('dist/CNAME') && fs.readFileSync('dist/CNAME','utf8').trim()==='eyuxq.com','expect GitHub Pages CNAME for eyuxq.com');
+assert(fs.existsSync('dist/404.html'),'expect custom 404 page');
+assert(sitemap.includes('https://eyuxq.com/') && sitemap.includes('https://eyuxq.com/resources.html') && !sitemap.includes('russianhub.github.io'),'sitemap must use https://eyuxq.com/');
+const robots=fs.readFileSync('dist/robots.txt','utf8');
+assert(robots.includes('Sitemap: https://eyuxq.com/sitemap.xml') && robots.includes('Disallow: /auth.html') && !robots.includes('/opensource-sites/'),'robots.txt must use custom-domain root paths');
+for (const file of ['index.html','resources.html','igu-guide.html','agent.html','about.html','practice.html','roadmap.html','status.html','submit.html','vocabulary.html']){
+  const page=fs.readFileSync('dist/'+file,'utf8');
+  assert(page.includes('rel="canonical"') && page.includes('https://eyuxq.com/') && page.includes('property="og:url"') && !page.includes('russianhub.github.io/opensource-sites'),'canonical and og:url on '+file+' must use eyuxq.com');
+}
+const knownUrls=new Set([...sites.map(x=>x.url),'https://eyuxq.com/','https://eyuxq.com/igu-guide.html','https://eyuxq.com/og-image.jpg?v=50','https://eyuxq.com/favicon.svg','https://schema.org']);
 assert(guideUrls.every(url=>knownUrls.has(url)),`guide contains a link outside the curated catalog: ${guideUrls.filter(url=>!knownUrls.has(url)).join(', ')}`);
 assert(sitemap.includes('/igu-guide.html')&&fs.readFileSync('dist/sw.js','utf8').includes("'./igu-guide.html'"),'expect the guide to be indexed and available offline');
 const i18n=fs.readFileSync('dist/i18n.js','utf8');
