@@ -1,16 +1,14 @@
-# 俄语星球发布在 GitHub Pages 项目站点，没有自定义域名。
-# 站点：https://russianhub.github.io/opensource-sites/
-# 搜索引擎通常只读取主机根目录的 robots.txt（https://russianhub.github.io/robots.txt）。
-# 本文件随项目站点发布；收录请在站长平台直接提交下面的 sitemap 完整地址。
+# 俄语星球已使用自定义域名 https://eyuxq.com/
+# 请在站长平台提交下面的 sitemap 完整地址。
 
 User-agent: *
-Allow: /opensource-sites/
+Allow: /
 
 # 登录、账户、后台、个人学习和可用性测试页不提供给抓取。
-Disallow: /opensource-sites/auth.html
-Disallow: /opensource-sites/account.html
-Disallow: /opensource-sites/admin.html
-Disallow: /opensource-sites/dashboard.html
-Disallow: /opensource-sites/test.html
+Disallow: /auth.html
+Disallow: /account.html
+Disallow: /admin.html
+Disallow: /dashboard.html
+Disallow: /test.html
 
-Sitemap: https://russianhub.github.io/opensource-sites/sitemap.xml
+Sitemap: https://eyuxq.com/sitemap.xml
