@@ -1,8 +1,8 @@
 # 俄语星球
 
-> **网站入口：[立即打开俄语星球 →](https://russianhub.github.io/opensource-sites/)**
+> **网站入口：[立即打开俄语星球 →](https://eyuxq.com/)**
 
-[AI 学习助理](https://russianhub.github.io/opensource-sites/agent.html) · [资源导航](https://russianhub.github.io/opensource-sites/resources.html) · [学习路线](https://russianhub.github.io/opensource-sites/roadmap.html) · [登录](https://russianhub.github.io/opensource-sites/auth.html)
+[AI 学习助理](https://eyuxq.com/agent.html) · [资源导航](https://eyuxq.com/resources.html) · [学习路线](https://eyuxq.com/roadmap.html) · [登录](https://eyuxq.com/auth.html)
 
 面向中国俄语学习者和在俄罗斯留学生的学习、交流与生活资源平台。
 
