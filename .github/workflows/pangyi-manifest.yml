@@ -1,16 +1,27 @@
 # 旁译更新清单同步：
-# pangyi 是公开仓库，这里每小时查一次它的最新正式 Release（草稿/预发布自动跳过），
-# 有新版本就下载安装包、计算 SHA256 并签名，把 latest.json 推进本站发布目录，
-# Pages 随之重新部署。安装包本身不进网站仓库（>100MB 超出 GitHub 限制），
-# 下载地址直接指向 GitHub Release 直链（公开 CDN）。
-# 不需要任何跨仓库 token；签名用的私钥在 PANGYI_SIGN_KEY secret。
-# 也可以在 Actions 页手动 Run workflow 立即同步。
+# pangyi 是公开仓库，这里每小时查一次它的最新正式 Release（草稿/预发布自动跳过）。
+# 有新版本、手动 force，或清单主链还没切到 R2 时，下载安装包、计算 SHA256 并签名，
+# 把 latest.json 推进本站发布目录，Pages 随之重新部署。安装包不进网站仓库。
+#
+# Cloudflare R2（四个 Secret 都配齐才启用）：
+#   R2_ACCOUNT_ID、R2_ACCESS_KEY_ID、R2_SECRET_ACCESS_KEY、R2_BUCKET
+# 可选变量 PANGYI_DOWNLOAD_BASE，空则 https://download.eyuxq.com（去掉末尾斜杠）。
+# 上传到 s3://$R2_BUCKET/pangyi-$TAG.exe 后，必须先用公网 HEAD 确认可访问且大小一致，
+# 才把该直链写进 latest.json。GitHub Release 放在 mirrors 里做兜底。
+# 四个 Secret 都没配：保持 GitHub Release 直链，mirrors 为空，定时任务不报错。
+# 只配了 1～3 个：失败并列出缺失的 Secret 名称，不打印任何值。
+# 签名私钥在 PANGYI_SIGN_KEY。不需要跨仓库 token。
 name: Sync pangyi update manifest
 
 on:
   schedule:
     - cron: '0 * * * *'
   workflow_dispatch:
+    inputs:
+      force:
+        description: '强制重新同步当前最新 Release（例如配好 R2 后立刻把已发布版本切到直连下载）'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -32,65 +43,180 @@ jobs:
 
       - name: 查 pangyi 最新正式发布
         run: |
+          set -euo pipefail
           curl -fsS --retry 3 "https://api.github.com/repos/${PANGYI_REPO}/releases/latest" -o release.json
           TAG=$(python3 -c "import json;print(json.load(open('release.json'))['tag_name'])")
           echo "TAG=${TAG}" >> "$GITHUB_ENV"
           echo "latest release: ${TAG}"
 
-      - name: 已同步过就跳过
-        id: needsync
-        run: |
-          VER="${TAG#v}"
-          if [ -f "${SITE_DIR}/latest.json" ] && grep -q "\"version\": \"${VER}\"" "${SITE_DIR}/latest.json"; then
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "skip=false" >> "$GITHUB_OUTPUT"
-          fi
+      # github.event.inputs.force 在定时触发时为空。布尔输入关掉时是字符串 "false"，
+      # 在表达式里是真值，所以这里原样传给脚本，由脚本把 true/false 解析成布尔。
+      - name: 检查 R2 配置并判断是否同步
+        id: plan
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+          PANGYI_DOWNLOAD_BASE: ${{ vars.PANGYI_DOWNLOAD_BASE }}
+          FORCE: ${{ github.event.inputs.force || 'false' }}
+        run: python3 .github/scripts/pangyi-sync-plan.py
 
       - uses: actions/setup-python@v5
-        if: steps.needsync.outputs.skip != 'true'
+        if: steps.plan.outputs.skip != 'true'
         with:
           python-version: "3.12"
 
       - name: 安装签名依赖
-        if: steps.needsync.outputs.skip != 'true'
+        if: steps.plan.outputs.skip != 'true'
         run: pip install cryptography
 
-      - name: 下载安装包并生成签名清单
-        if: steps.needsync.outputs.skip != 'true'
-        env:
-          SIGN_KEY_PEM: ${{ secrets.PANGYI_SIGN_KEY }}
+      - name: 下载安装包
+        if: steps.plan.outputs.skip != 'true'
         run: |
+          set -euo pipefail
           mkdir -p dl
           curl -fL --retry 3 "https://github.com/${PANGYI_REPO}/releases/download/${TAG}/pangyi-${TAG}.exe" -o "dl/pangyi-${TAG}.exe"
+
+      - name: 上传安装包到 Cloudflare R2
+        if: steps.plan.outputs.skip != 'true' && steps.plan.outputs.ready == 'true'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+          AWS_EC2_METADATA_DISABLED: "true"
+          AWS_REQUEST_CHECKSUM_CALCULATION: when_required
+          AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+        run: |
+          set -euo pipefail
+          if ! command -v aws >/dev/null 2>&1; then
+            echo "运行器上没有 aws CLI，无法上传到 R2。未写入 latest.json。"
+            exit 1
+          fi
+          # 不使用 set -x，避免把密钥打进日志。GitHub 也会掩码 Secret 的值。
+          aws s3 cp "dl/pangyi-${TAG}.exe" "s3://${R2_BUCKET}/pangyi-${TAG}.exe" \
+            --endpoint-url "https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com" \
+            --content-type "application/octet-stream" \
+            --only-show-errors
+
+      - name: 校验 R2 公网直链
+        if: steps.plan.outputs.skip != 'true' && steps.plan.outputs.ready == 'true'
+        env:
+          R2_BASE: ${{ steps.plan.outputs.base }}
+        run: |
+          set -euo pipefail
+          local_size=$(stat -c%s "dl/pangyi-${TAG}.exe")
+          url="${R2_BASE}/pangyi-${TAG}.exe"
+          headers_file=$(mktemp)
+          trap 'rm -f "$headers_file"' EXIT
+          echo "校验公网直链大小，通过之后才会生成 latest.json。"
+          curl -fsI --retry 5 --retry-all-errors --retry-delay 2 -D "$headers_file" -o /dev/null "$url"
+          LOCAL_SIZE="$local_size" HEADERS_FILE="$headers_file" python3 - <<'PY'
+          import os, sys
+          local = os.environ["LOCAL_SIZE"]
+          status = ""
+          length = ""
+          for raw in open(os.environ["HEADERS_FILE"], encoding="utf-8", errors="replace"):
+              line = raw.strip()
+              if line.upper().startswith("HTTP/"):
+                  parts = line.split()
+                  if len(parts) >= 2:
+                      status = parts[1]
+              elif line.lower().startswith("content-length:"):
+                  length = line.split(":", 1)[1].strip()
+          print(f"HTTP {status or '未知'}，Content-Length {length or '缺失'}，本地 {local} 字节")
+          if status != "200" or length != local:
+              print("公网直链不可用或大小不一致，拒绝写入 latest.json。")
+              sys.exit(1)
+          PY
+          echo "公网直链校验通过：${url}"
+
+      - name: 生成签名清单
+        if: steps.plan.outputs.skip != 'true'
+        env:
+          SIGN_KEY_PEM: ${{ secrets.PANGYI_SIGN_KEY }}
+          R2_READY: ${{ steps.plan.outputs.ready }}
+          R2_BASE: ${{ steps.plan.outputs.base }}
+        run: |
+          set -euo pipefail
           export EXE_PATH="dl/pangyi-${TAG}.exe"
-          # 主下载地址 = GitHub Release 直链（安装包不进网站仓库）
-          export DOWNLOAD_BASE="https://github.com/${PANGYI_REPO}/releases/download/${TAG}"
           export RELEASE_BODY="$(python3 -c "import json;print(json.load(open('release.json'))['body'] or '')")"
+          if [ "$R2_READY" = "true" ]; then
+            export DOWNLOAD_BASE="${R2_BASE}"
+            export MIRROR_URL="https://github.com/${PANGYI_REPO}/releases/download/${TAG}/pangyi-${TAG}.exe"
+          else
+            export DOWNLOAD_BASE="https://github.com/${PANGYI_REPO}/releases/download/${TAG}"
+            export MIRROR_URL=""
+            echo "R2 未配置，主下载仍为 GitHub Release 直链，mirrors 为空。"
+          fi
           python3 .github/scripts/pangyi-make-manifest.py "${SITE_DIR}/latest.json"
+          python3 - <<'PY'
+          import json, os
+          manifest = json.load(open(os.environ["SITE_DIR"] + "/latest.json", encoding="utf-8"))
+          tag = os.environ["TAG"]
+          ready = os.environ.get("R2_READY") == "true"
+          base = os.environ["DOWNLOAD_BASE"].rstrip("/")
+          expected = f"{base}/pangyi-{tag}.exe"
+          if manifest["url"] != expected:
+              raise SystemExit("生成的 url 与预期下载地址不一致，拒绝提交")
+          mirror = os.environ.get("MIRROR_URL", "").strip()
+          if ready:
+              if manifest["mirrors"] != [mirror]:
+                  raise SystemExit("生成的 mirrors 不是 GitHub Release 兜底，拒绝提交")
+          elif manifest["mirrors"] != []:
+              raise SystemExit("未启用 R2 时 mirrors 必须为空，拒绝提交")
+          print("清单主链:", manifest["url"])
+          PY
           cat "${SITE_DIR}/latest.json"
+          if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
+            {
+              echo "### 旁译清单已更新"
+              echo ""
+              echo "- 版本：\`${TAG}\`"
+              if [ "$R2_READY" = "true" ]; then
+                echo "- 主下载：${R2_BASE}/pangyi-${TAG}.exe"
+                echo "- 备用：GitHub Release"
+              else
+                echo "- 主下载：GitHub Release（R2 未配置）"
+                echo "- 备用：无"
+              fi
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
 
       - name: 提交并推送
-        if: steps.needsync.outputs.skip != 'true'
+        if: steps.plan.outputs.skip != 'true'
         run: |
+          set -euo pipefail
           # 只提交 latest.json；dl/ 是下载暂存，不进仓库
           git add "${SITE_DIR}/latest.json"
+          git status --short
           git config user.name "pangyi-release-bot"
           git config user.email "bot@users.noreply.github.com"
-          git commit -m "pangyi ${TAG}: update latest.json" || echo "nothing to commit"
-          git push
+          staged=$(git diff --cached --name-only)
+          if [ -z "$staged" ]; then
+            echo "nothing to commit"
+          elif [ "$staged" = "${SITE_DIR}/latest.json" ]; then
+            git commit -m "pangyi ${TAG}: update latest.json"
+            git push
+          else
+            echo "拒绝提交 latest.json 以外的文件："
+            printf '%s\n' "$staged"
+            exit 1
+          fi
 
       # GITHUB_TOKEN 的推送不会触发 pages.yml（GitHub 防递归），所以这里自己部署。
       - name: Configure Pages
-        if: steps.needsync.outputs.skip != 'true'
+        if: steps.plan.outputs.skip != 'true'
         uses: actions/configure-pages@v5
 
       - name: Upload website
-        if: steps.needsync.outputs.skip != 'true'
+        if: steps.plan.outputs.skip != 'true'
         uses: actions/upload-pages-artifact@v4
         with:
           path: sites-plugin-sites-openai-curated-remote/work/life-spark/dist
 
       - name: Deploy
-        if: steps.needsync.outputs.skip != 'true'
+        if: steps.plan.outputs.skip != 'true'
         uses: actions/deploy-pages@v4

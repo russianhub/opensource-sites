@@ -6,9 +6,11 @@
   EXE_PATH       安装包路径
   SIGN_KEY_PEM   ed25519 私钥（PEM 全文）
 可选：
-  DOWNLOAD_BASE  默认 https://eyuxq.com/download
-  MIRROR_URL     备用下载地址（GitHub Release 直链）
-  RELEASE_BODY   Release 说明，取前 8 行作为更新内容
+  DOWNLOAD_BASE  主下载基址，默认 https://eyuxq.com/download（去掉末尾斜杠）。
+                 workflow 在 R2 启用时传入 https://download.eyuxq.com（或 PANGYI_DOWNLOAD_BASE），
+                 未启用时传入 GitHub Release 的 tag 目录。
+  MIRROR_URL     备用下载地址。R2 启用时为 GitHub Release 直链；未设置则为空数组。
+  RELEASE_BODY   Release 说明，取前 8 行非空内容作为更新说明
 用法： python pangyi-make-manifest.py dist/latest.json
 """
 import base64
