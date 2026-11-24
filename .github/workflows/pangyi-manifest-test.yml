@@ -1,0 +1,42 @@
+# 旁译清单脚本的单元测试，以及 pangyi-manifest workflow 的静态检查。
+# 单独一条 workflow，不和 Pages 部署共用 concurrency 组，也不上传、不部署。
+name: Test pangyi manifest
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 安装测试依赖
+        run: python3 -m pip install --disable-pip-version-check cryptography pyyaml
+
+      - name: 清单脚本单元测试与 workflow 静态检查
+        run: python3 .github/scripts/test_pangyi_make_manifest.py
+
+      - name: 网站现有本地检查
+        working-directory: sites-plugin-sites-openai-curated-remote/work/life-spark
+        run: |
+          node --check dist/app.js
+          node --check dist/sw.js
+          node --check dist/pangyi-dl.js
+          node --check dist/i18n.js
+          node build-resource-directory.cjs --check
+          node sync-resource-icons.cjs --check
+          node check-russian-hub.cjs
+          node audit-site.cjs
+          node check-pangyi-dl.cjs
