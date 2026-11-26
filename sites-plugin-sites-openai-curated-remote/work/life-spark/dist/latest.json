@@ -1,18 +1,19 @@
 {
-  "version": "4.19.0",
-  "released": "2026-11-19",
+  "version": "4.20.0",
+  "released": "2026-11-26",
   "notes": [
-    "旁译 v4.19.0",
-    "更新提醒：新增独立更新程序 pangyi-updater。输入法本体保持完全离线，更新检查由它独立完成，只请求版本信息，可在设置里关闭",
-    "设置面板新增「更新」行：检查更新 / 自动 / 关",
-    "发新版后：官网（eyuxq.com）下载按钮自动指向最新安装包，已安装用户下次登录会收到更新提醒",
-    "更新安装包经 ed25519 签名与 SHA256 校验，下载走 HTTPS",
-    "邮箱验证码登录：拒绝未配置和不完整会话，验证码 10 分钟有效、60 秒重发间隔，令牌只经 DPAPI 保存在本机",
-    "旧版本没有更新程序，本次需要手动下载安装一次，之后即可自动收到更新提醒"
+    "旁译 v4.20.0｜设置窗口重做",
+    "这次把设置换成独立的 `pangyi-settings.exe`，并按 Windows 11 设置页的风格重做了界面。双击桌面上的「旁译」，或打开开始菜单里的「旁译」，就会进入这个窗口。输入法本体仍然完全离线，不联网，也不做遥测。",
+    "[下载 Windows 安装包：pangyi-v4.20.0.exe](https://github.com/russianhub/pangyi/releases/download/v4.20.0/pangyi-v4.20.0.exe)**",
+    "安装包未签名。若出现 SmartScreen 提示，先确认文件来自本仓库的 Release，再按文末的方法核对 SHA256。",
+    "从 v4.19.0 升级时，请保存工作，完全退出并重开使用旁译的应用（包括后台进程）。若设置窗口仍是旧的一排按钮，注销后重新登录，或再运行一次本安装包。",
+    "新的设置窗口",
+    "来自 [PR #16](https://github.com/russianhub/pangyi/pull/16)、[PR #20](https://github.com/russianhub/pangyi/pull/20) 和 [PR #",
+    "左侧导航分成 6 项：输入、外观、翻译、词库、账号与更新、关于。"
   ],
-  "url": "https://github.com/russianhub/pangyi/releases/download/v4.19.0/pangyi-v4.19.0.exe",
+  "url": "https://github.com/russianhub/pangyi/releases/download/v4.20.0/pangyi-v4.20.0.exe",
   "mirrors": [],
-  "sha256": "7e2525baba3544cd2514abc2c12824ce8daae4b45951d6d04be8fd07318b6e57",
-  "size": 193165312,
-  "sig": "/2oe1KeEki09NakJG0qrZGEcJHpozxK8XSgVy2QtsL+Imf2PSb2AM0IZCFI2jaxsoJv+whyYDQI2HY0zrxzuBw=="
+  "sha256": "614fc851bfb7935638ceea2df93f9b2ddc8fe74ccd6ec7706e3841494da548ea",
+  "size": 203616256,
+  "sig": "UTUdVh+/2R6hru8UNYJXCWxk8h6gHhWmHPDAw1BZ3RqYGrr/e6Sy6jB5mBTPvWEf6DJXwjXIAPljL4PjDRQzAg=="
 }
