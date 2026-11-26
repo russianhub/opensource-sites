@@ -150,7 +150,7 @@ const guide=fs.readFileSync('dist/igu-guide.html','utf8');
 assert(guide.includes('ИГУ 新生指南')&&guide.includes('id="checklist"')&&guide.includes('id="faq"')&&guide.includes('不是学校发布的官方清单'),'expect a cautious ISU freshman guide');
 assert(sites.filter(x=>x.cat==='isu').every(x=>guide.includes(`href="${x.url}"`)),'guide must embed every existing ISU resource URL');
 const guideUrls=[...guide.matchAll(/https:\/\/[^"'\\\s<]+/g)].map(match=>match[0].replace(/&amp;/g,'&'));
-const knownUrls=new Set([...sites.map(x=>x.url),'https://russianhub.github.io/opensource-sites/','https://russianhub.github.io/opensource-sites/igu-guide.html','https://russianhub.github.io/opensource-sites/og-image.jpg?v=50','https://russianhub.github.io/opensource-sites/favicon.svg','https://schema.org']);
+const knownUrls=new Set([...sites.map(x=>x.url),'https://eyuxq.com/','https://eyuxq.com/igu-guide.html','https://eyuxq.com/og-image.jpg?v=50','https://eyuxq.com/favicon.svg','https://schema.org']);
 assert(guideUrls.every(url=>knownUrls.has(url)),`guide contains a link outside the curated catalog: ${guideUrls.filter(url=>!knownUrls.has(url)).join(', ')}`);
 assert(sitemap.includes('/igu-guide.html')&&fs.readFileSync('dist/sw.js','utf8').includes("'./igu-guide.html'"),'expect the guide to be indexed and available offline');
 const i18n=fs.readFileSync('dist/i18n.js','utf8');

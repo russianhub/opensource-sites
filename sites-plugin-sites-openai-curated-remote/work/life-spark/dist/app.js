@@ -460,7 +460,7 @@ $('#sharePhrase').onclick=async()=>{
   const ru=$('#study-title').textContent;
   const zh=$('#phraseZh').textContent;
   const text=`今日俄语：${ru}\n${zh}\n\n和我一起在俄语星球每天学一点。`;
-  const url='https://russianhub.github.io/opensource-sites/#study-desk';
+  const url='https://eyuxq.com/#study-desk';
   try{
     if(navigator.share){await navigator.share({title:'俄语星球 · 今日俄语',text,url});return}
     await navigator.clipboard.writeText(`${text}\n${url}`);toast('今日俄语已复制，可以分享给朋友');

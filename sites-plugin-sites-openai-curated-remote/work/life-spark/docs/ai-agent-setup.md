@@ -38,7 +38,7 @@ npx supabase functions deploy russian-agent
 
 函数默认要求 Supabase 登录 JWT；这与网站现有邮箱验证码登录兼容。部署后访问：
 
-`https://russianhub.github.io/opensource-sites/agent.html`
+`https://eyuxq.com/agent.html`
 
 游客仍可使用站内资源检索；登录用户可使用完整 AI 对话。
 
