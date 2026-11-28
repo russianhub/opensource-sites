@@ -1,19 +1,19 @@
 {
-  "version": "4.20.0",
-  "released": "2026-11-26",
+  "version": "4.21.0",
+  "released": "2026-11-28",
   "notes": [
-    "旁译 v4.20.0｜设置窗口重做",
-    "这次把设置换成独立的 `pangyi-settings.exe`，并按 Windows 11 设置页的风格重做了界面。双击桌面上的「旁译」，或打开开始菜单里的「旁译」，就会进入这个窗口。输入法本体仍然完全离线，不联网，也不做遥测。",
-    "[下载 Windows 安装包：pangyi-v4.20.0.exe](https://github.com/russianhub/pangyi/releases/download/v4.20.0/pangyi-v4.20.0.exe)**",
-    "安装包未签名。若出现 SmartScreen 提示，先确认文件来自本仓库的 Release，再按文末的方法核对 SHA256。",
-    "从 v4.19.0 升级时，请保存工作，完全退出并重开使用旁译的应用（包括后台进程）。若设置窗口仍是旧的一排按钮，注销后重新登录，或再运行一次本安装包。",
-    "新的设置窗口",
-    "来自 [PR #16](https://github.com/russianhub/pangyi/pull/16)、[PR #20](https://github.com/russianhub/pangyi/pull/20) 和 [PR #",
-    "左侧导航分成 6 项：输入、外观、翻译、词库、账号与更新、关于。"
+    "旁译 v4.21.0｜个人词库编辑器",
+    "在设置里管理个人词库，也可以直接保存正在输入的候选。比如，输入 mygate 就能调出「登机口 · мой выход」。",
+    "[下载 Windows 安装包](https://github.com/russianhub/pangyi/releases/download/v4.21.0/pangyi-v4.21.0.exe) · [SHA256 校验文件](http",
+    "在设置里管理个人词库",
+    "在「旁译设置 → 词库」新增、搜索、编辑或批量删除词条，也可以覆盖已有词的俄语释义。",
+    "自定义词条的权重可填 −9999 至 9999，留空默认为 0。同音候选可用「上移」「下移」调整，也可以点「最高权重」。保存后重新输入完整拼音即可看到变化。",
+    "内置出行、点餐和办公三套词典。导入本地 TSV 时可预览新增、跳过、覆盖及合并的条数，格式有误的行会注明行号和原因。支持旧版 TSV，以及带名称、作者、版本、语言和说明的新词典。 [词典格式与示例](https://github.com/r",
+    "删除、导入、调权重和快速加词可撤销，最多保留最近 10 步，重开设置后仍可使用。导入和升级前会备份已有词库，最近 5 份自动备份会保留。也可用「一键导出备份」单独保存。"
   ],
-  "url": "https://github.com/russianhub/pangyi/releases/download/v4.20.0/pangyi-v4.20.0.exe",
+  "url": "https://github.com/russianhub/pangyi/releases/download/v4.21.0/pangyi-v4.21.0.exe",
   "mirrors": [],
-  "sha256": "614fc851bfb7935638ceea2df93f9b2ddc8fe74ccd6ec7706e3841494da548ea",
-  "size": 203616256,
-  "sig": "UTUdVh+/2R6hru8UNYJXCWxk8h6gHhWmHPDAw1BZ3RqYGrr/e6Sy6jB5mBTPvWEf6DJXwjXIAPljL4PjDRQzAg=="
+  "sha256": "e0b63bdf48005c0765ab3041b4e598a9408f27436464ac1e765962eb8ba91e0c",
+  "size": 212406784,
+  "sig": "dTytr/MLlIoDjhjFiLc/R4Rdnxjeb3bO14vNgC7luoDRkPQEYSUkNzb2W15aKRtV8OMDVxjQXY9WZDyY6P8XBg=="
 }
